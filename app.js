@@ -425,7 +425,7 @@ const MODULES = [
      ───────────────────────────────────────── */
   {
     id:'m1', color:'mint', emoji:'',
-    levelTag:'Nível 1 — Preparar o Solo',
+    levelTag:'Preparar o Solo',
     title:'Por que Cultivar Emoções Positivas',
     tagline:'A ciência do que faz bem',
     xp:50, badgeId:'b_m1', unlockAfter:null,
@@ -480,7 +480,7 @@ ${svgBroaden()}
      ───────────────────────────────────────── */
   {
     id:'m2', color:'lav', emoji:'',
-    levelTag:'Nível 1 — Preparar o Solo',
+    levelTag:'Preparar o Solo',
     title:'O Repertório: 10 Emoções Positivas',
     tagline:'Nomear com precisão amplia o sentir',
     xp:60, badgeId:'b_m2', unlockAfter:'m1',
@@ -535,7 +535,7 @@ ${emoGridHTML()}
      ───────────────────────────────────────── */
   {
     id:'m3', color:'amber', emoji:'',
-    levelTag:'Nível 2 — Notar e Saborear',
+    levelTag:'Notar e Saborear',
     title:'Notar: o Radar do Positivo',
     tagline:'Treinar a atenção para o que já vai bem',
     xp:65, badgeId:'b_m3', unlockAfter:'m2',
@@ -589,7 +589,7 @@ ${emoGridHTML()}
      ───────────────────────────────────────── */
   {
     id:'m4', color:'coral', emoji:'',
-    levelTag:'Nível 2 — Notar e Saborear',
+    levelTag:'Notar e Saborear',
     title:'Saborear: Presente, Passado e Futuro',
     tagline:'Amplificar e prolongar o que é bom',
     xp:70, badgeId:'b_m4', unlockAfter:'m3',
@@ -645,7 +645,7 @@ ${emoGridHTML()}
      ───────────────────────────────────────── */
   {
     id:'m5', color:'mint', emoji:'',
-    levelTag:'Nível 3 — Aprofundar',
+    levelTag:'Aprofundar',
     title:'Gratidão que Transforma',
     tagline:'A prática com mais evidência da área',
     xp:70, badgeId:'b_m5', unlockAfter:'m4',
@@ -701,7 +701,7 @@ ${emoGridHTML()}
      ───────────────────────────────────────── */
   {
     id:'m6', color:'lav', emoji:'',
-    levelTag:'Nível 3 — Aprofundar',
+    levelTag:'Aprofundar',
     title:'Contentamento e Segurança (TFC)',
     tagline:'O bem-estar que não depende de conquista',
     xp:80, badgeId:'b_m6', unlockAfter:'m5',
@@ -750,7 +750,7 @@ ${svgThreeSystems()}
      ───────────────────────────────────────── */
   {
     id:'m7', color:'coral', emoji:'',
-    levelTag:'Nível 4 — Florescer',
+    levelTag:'Florescer',
     title:'Crenças que Bloqueiam a Alegria',
     tagline:'Testar na prática os medos do bem-estar',
     xp:90, badgeId:'b_m7', unlockAfter:'m6',
@@ -820,7 +820,7 @@ ${svgThreeSystems()}
      ───────────────────────────────────────── */
   {
     id:'m8', color:'amber', emoji:'',
-    levelTag:'Nível 4 — Florescer',
+    levelTag:'Florescer',
     title:'Um Jardim que Dura',
     tagline:'Transformar práticas em recursos para a vida',
     xp:100, badgeId:'b_m8', unlockAfter:'m7',
@@ -1519,7 +1519,7 @@ function renderNextStep(){
     el.innerHTML = `<div class="next-card done">
       <div class="next-lbl">Hoje já foi regado</div>
       <div class="next-title">Um momento já conta. O resto do dia é descanso.</div>
-      ${nm?`<button class="btn next-btn ghost-light" onclick="openModule('${nm.id}')">Continuar: ${esc(nm.title)}</button>`:''}
+      ${nm?`<div class="next-sub">Próximo para você: ${esc(nm.title)}</div><button class="btn next-btn ghost-light" onclick="openModule('${nm.id}')">Continuar o módulo</button>`:''}
     </div>`;
   }
 }
@@ -1711,12 +1711,12 @@ function renderModuleStep(){
   const btnLabel = isLast ? 'Concluir módulo ' : 'Continuar →';
 
   document.getElementById('module-content').innerHTML =
-    `<div style="background:${grad};min-height:150px;padding:calc(env(safe-area-inset-top,0px)+20px) 20px 24px;color:white;position:relative;overflow:hidden">
+    `<div style="background:${grad};min-height:150px;padding:calc(env(safe-area-inset-top,0px) + 20px) 24px 28px;color:white;position:relative;overflow:hidden">
       <div style="position:absolute;right:-8px;top:-8px;font-size:80px;opacity:.15;user-select:none">${mod.emoji}</div>
       <button class="mod-hero-back" onclick="goTo('modules')">←</button>
-      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;opacity:.8;margin-bottom:6px;margin-top:24px">${mod.levelTag}</div>
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;opacity:.8;margin-bottom:8px;margin-top:40px">${mod.levelTag}</div>
       <div style="font-size:20px;font-weight:600;letter-spacing:-.3px;line-height:1.25;margin-bottom:10px">${mod.title}</div>
-      <div style="font-size:12px;font-weight:700;opacity:.85;background:rgba(255,255,255,.15);display:inline-block;padding:4px 10px;border-radius:20px">Etapa ${_curStep+1} de ${mod.steps.length} · +${mod.xp} XP ao concluir</div>
+      <div style="font-size:12px;font-weight:700;opacity:.85;background:rgba(255,255,255,.15);display:inline-block;padding:4px 10px;border-radius:20px">Etapa ${_curStep+1} de ${mod.steps.length}</div>
     </div>
     <div style="background:var(--sand);padding:8px 0 4px">${dots.length>1?`<div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:4px 0">${dots}</div>`:''}</div>
     <div class="step-body" style="padding-bottom:8px">${body}</div>
@@ -2401,7 +2401,7 @@ table{width:100%;border-collapse:collapse;background:white;border-radius:12px;ov
   <div class="stat"><div class="stat-n">${avg}</div><div class="stat-l">intensidade média (1-5)</div></div>
   <div class="stat"><div class="stat-n">${felt.size}/10</div><div class="stat-l">repertório de emoções</div></div>
   <div class="stat"><div class="stat-n">${expDone.length}</div><div class="stat-l">experimentos concluídos</div></div>
-  <div class="stat"><div class="stat-n">${D.xp}</div><div class="stat-l">XP · Nível ${lv.n} ${lv.name}</div></div>
+  <div class="stat"><div class="stat-n">${calcTotalDays()}</div><div class="stat-l">dias de cultivo</div></div>
   <div class="stat"><div class="stat-n">${doneMods.length}/${MODULES.length}</div><div class="stat-l">módulos concluídos</div></div>
 </div>
 ${doneMods.length?`<h2>Módulos concluídos</h2><div class="ins"><div class="ins-b">${doneMods.map(m=>`<span class="pill">${m}</span>`).join('')}</div></div>`:''}
