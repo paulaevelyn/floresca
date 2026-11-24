@@ -315,10 +315,20 @@ function plantSVG(t,c1,c2,w){
   else body = `<path d="M40 98 V30" ${st}/><path d="M40 82 Q22 80 18 64 Q36 64 40 82Z" fill="${c2}"/><path d="M40 82 Q58 80 62 64 Q44 64 40 82Z" fill="${c2}"/><path d="M40 58 Q24 56 20 40 Q36 40 40 58Z" fill="${c2}"/><path d="M40 58 Q56 56 60 40 Q44 40 40 58Z" fill="${c2}"/><path d="M40 38 Q32 28 40 14 Q48 28 40 38Z" fill="${c1}"/>`;
   return `<svg viewBox="0 0 80 100" width="${w}" height="${h}" aria-hidden="true" focusable="false">${body}</svg>`;
 }
+function isElaborated(e){ return !!(e && e.why && e.why.trim().length >= 12); }
+/* Pontos de cuidado por emoção: cada dia com a emoção nomeada vale 1;
+   se nesse dia a pessoa também escreveu POR QUE foi bom, vale 2 (teto: 2 por dia).
+   Assim, escrever o porquê, que é o ingrediente ativo das "Três Coisas Boas",
+   cresce mais do que repetir registros vazios. */
 function emotionDays(){
   const m = {};
-  D.entries.forEach(e=>(e.emotions||[]).forEach(id=>{ (m[id]||(m[id]=new Set())).add(e.date); }));
-  return m;
+  D.entries.forEach(e=>(e.emotions||[]).forEach(id=>{
+    const day = (m[id]||(m[id]={}));
+    day[e.date] = Math.max(day[e.date]||0, isElaborated(e) ? 2 : 1);
+  }));
+  const out = {};
+  Object.keys(m).forEach(id=>{ out[id] = { size: Object.values(m[id]).reduce((a,b)=>a+b,0) }; });
+  return out;
 }
 function plantStage(n){ return n>=6 ? 3 : n>=3 ? 2 : n>=1 ? 1 : 0; }
 function gardenItems(){
@@ -1710,7 +1720,9 @@ function buildEntry(e){
   }).join('');
   const sav=(e.savoring||[]).filter(s=>s!=='Ainda não saboreei').map(s=>'<span class="badge-tag bg">'+esc(s)+'</span>').join('');
   const stars='<span class="badge-tag bt">'+'★'.repeat(e.intensity||3)+'</span>';
-  return '<div class="entry"><div class="entry-dt">'+dt+'</div><div class="entry-w">'+esc(e.moment||'(sem texto)')+'</div><div class="entry-meta">'+stars+emos+sav+'</div></div>';
+  const why = isElaborated(e) ? '<div class="entry-why"><span>Porque</span> '+esc(e.why)+'</div>' : '';
+  const share = e.moment ? '<button class="link-btn entry-share" onclick="shareMoment(\''+e.id+'\')">'+(e.shared?'Compartilhado. Enviar de novo':'Compartilhar')+'</button>' : '';
+  return '<div class="entry"><div class="entry-dt">'+dt+'</div><div class="entry-w">'+esc(e.moment||'(sem texto)')+'</div>'+why+'<div class="entry-meta">'+stars+emos+sav+'</div>'+share+'</div>';
 }
 
 /* ══════════════════════════════════
@@ -2102,6 +2114,11 @@ function renderDiaryForm(){
       <div style="text-align:right;font-size:12px;color:var(--light);margin-top:3px"><span id="dcc">0</span>/300</div>
     </div>
     <div style="margin-bottom:20px">
+      <label class="form-lbl" for="dwhy">Por que isso foi bom? <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label>
+      <div class="form-hint">Dizer o porquê é o que mais ajuda a notar o bom de novo. Uma frase basta.</div>
+      <textarea id="dwhy" rows="2" maxlength="300" placeholder="Porque…"></textarea>
+    </div>
+    <div style="margin-bottom:20px">
       <label class="form-lbl">Que emoções você sentiu?</label>
       <div class="form-hint">Nomear com precisão amplia o sentir.</div>
       <div class="chips" id="d-emo">${EMOTIONS.map(e=>`<span class="chip" data-emo="${e.id}" onclick="toggleChip(this)">${e.emoji} ${e.name}</span>`).join('')}</div>
@@ -2131,11 +2148,45 @@ function saveDiary(){
   const emotions=[...document.querySelectorAll('#d-emo .chip.sel')].map(c=>c.dataset.emo);
   const savoring=[...document.querySelectorAll('#d-sav .chip.sel')].map(c=>c.textContent);
   const intensity=parseInt(document.getElementById('da')?.value||3);
-  D.entries.unshift({id:Date.now().toString(),ts:Date.now(),date:today(),moment:w,emotions,savoring,intensity});
-  save(); checkBadges(); trackDiaryEvent(); checkPosttestTrigger(); toast(emotions.length ? 'Momento guardado. Seu jardim agradece.' : 'Momento guardado. Nomeie a emoção da próxima vez para uma planta brotar.');
-  renderDiaryForm(); renderDiaryHist();
-  setTimeout(maybeShowIfThen, 900);
+  const why=(document.getElementById('dwhy')?.value||'').trim();
+  const entry={id:Date.now().toString(),ts:Date.now(),date:today(),moment:w,why:why||null,emotions,savoring,intensity};
+  D.entries.unshift(entry);
+  save(); checkBadges(); trackDiaryEvent(); checkPosttestTrigger(); if(isElaborated(entry)) trackAppEvent('moment_elaborated'); toast(isElaborated(entry) ? 'Momento guardado. Escrever o porquê ensina a notar o bom de novo.' : emotions.length ? 'Momento guardado. Seu jardim agradece.' : 'Momento guardado. Nomeie a emoção da próxima vez para uma planta brotar.');
+  renderDiaryForm(); renderDiaryHist(); showShareOffer(entry.id);
   scheduleLocalReminder();
+}
+
+/* Compartilhar uma boa notícia (capitalização, Gable et al.): contar a alguém
+   amplifica o efeito. Só envia o que a pessoa tocar para enviar, sem conta, sem servidor. */
+function shareText(e){ return 'Uma coisa boa do meu dia: '+e.moment+(isElaborated(e)?' ('+e.why.trim()+')':''); }
+async function shareMoment(id){
+  const e = D.entries.find(x=>x.id===id); if(!e) return;
+  const text = shareText(e);
+  let done = false;
+  try{
+    if(navigator.share){ await navigator.share({ text }); done = true; }
+    else if(navigator.clipboard && navigator.clipboard.writeText){ await navigator.clipboard.writeText(text); toast('Copiado. Cole numa conversa com quem você quer contar.'); done = true; }
+    else toast('Seu navegador não permite compartilhar daqui. Copie o texto manualmente.');
+  }catch(err){ /* cancelado pela pessoa: nada a fazer */ }
+  if(done){
+    e.shared = true; save(); trackAppEvent('moment_shared');
+    const offer = document.getElementById('share-offer');
+    if(offer){ offer.remove(); setTimeout(maybeShowIfThen, 400); }
+    renderDiaryHist();
+  }
+}
+function dismissShareOffer(){ const o=document.getElementById('share-offer'); if(o) o.remove(); trackAppEvent('share_offer_dismissed'); setTimeout(maybeShowIfThen, 300); }
+function showShareOffer(id){
+  const e = D.entries.find(x=>x.id===id); const host = document.getElementById('diary-form');
+  if(!e || !host) return;
+  const div = document.createElement('div');
+  div.id = 'share-offer'; div.className = 'share-offer';
+  div.innerHTML = `<div class="card-lbl">Quer contar a alguém?</div>
+    <p class="so-text">Compartilhar uma boa notícia com uma pessoa de confiança amplia o efeito. Só vai o que você tocar para enviar.</p>
+    <blockquote class="wk-quote">“${esc(e.moment.length>110?e.moment.slice(0,107)+'…':e.moment)}”</blockquote>
+    <div class="wk-actions"><button class="btn mint" style="margin:0;width:auto;padding:12px 22px" onclick="shareMoment('${e.id}')">Compartilhar</button><button class="link-btn" onclick="dismissShareOffer()">Agora não</button></div>`;
+  host.prepend(div);
+  const sc=document.getElementById('scr-diary'); if(sc) sc.scrollTop=0;
 }
 
 function renderDiaryHist(){
@@ -2562,20 +2613,20 @@ function exportCSV(){
   const rows = [
     ['record_type','timestamp','date','text','emotions','savoring_or_predicted','intensity_or_actual',
      'pre_spane_p','pre_spane_n','pre_spane_b','pre_beliefs',
-     'post_spane_p','post_spane_n','post_spane_b','post_beliefs'].join(','),
+     'post_spane_p','post_spane_n','post_spane_b','post_beliefs','why_text','shared'].join(','),
   ];
   D.entries.forEach(e=>{
-    rows.push(['moment',e.ts,e.date,csvEsc(e.moment),csvEsc((e.emotions||[]).join('|')),csvEsc((e.savoring||[]).join('|')),e.intensity,preCols,postCols].join(','));
+    rows.push(['moment',e.ts,e.date,csvEsc(e.moment),csvEsc((e.emotions||[]).join('|')),csvEsc((e.savoring||[]).join('|')),e.intensity,preCols,postCols,csvEsc(e.why||''),e.shared?1:0].join(','));
   });
   D.experiments.filter(e=>e.status==='done').forEach(r=>{
     const exp=EXPERIMENTS.find(x=>x.id===r.expId)||{};
-    rows.push(['experiment',r.tsDone,r.date,csvEsc(exp.title||r.expId),csvEsc(exp.emotion||''),r.predicted,r.actual,preCols,postCols].join(','));
+    rows.push(['experiment',r.tsDone,r.date,csvEsc(exp.title||r.expId),csvEsc(exp.emotion||''),r.predicted,r.actual,preCols,postCols,'',''].join(','));
   });
   D.doseRecords.forEach(r=>{
-    rows.push(['dose',r.ts,r.date,csvEsc(r.text),csvEsc((r.tags||[]).join('|')),'','',preCols,postCols].join(','));
+    rows.push(['dose',r.ts,r.date,csvEsc(r.text),csvEsc((r.tags||[]).join('|')),'','',preCols,postCols,'',''].join(','));
   });
   D.moduleFeedback.forEach(r=>{
-    rows.push(['feedback',r.ts,r.date,csvEsc(r.word),r.moduleId,'','',preCols,postCols].join(','));
+    rows.push(['feedback',r.ts,r.date,csvEsc(r.word),r.moduleId,'','',preCols,postCols,'',''].join(','));
   });
   if(rows.length<=1){ toast('Sem dados para exportar.'); return; }
   dl('floresca-pesquisa-'+today()+'.csv', '﻿'+rows.join('\n'), 'text/csv;charset=utf-8');
