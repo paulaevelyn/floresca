@@ -330,34 +330,14 @@
 <!-- DADOS -->
 <div class="scr" id="scr-dados">
   <div class="hdr"><h1>Dados e privacidade</h1><p>Controle total sobre suas informações.</p></div>
-  <!-- Pesquisa -->
   <div class="sdiv">Apoio</div>
   <div class="set-group">
     <button class="row-link" onclick="showSupport()"><span><strong>Preciso de apoio agora</strong><small>Telefones e chat gratuitos, 24 horas</small></span><span class="set-arr" aria-hidden="true">›</span></button>
     <button class="row-link" onclick="openAbout()"><span><strong>Sobre o Floresça</strong><small>A ciência por trás e os oito canteiros</small></span><span class="set-arr" aria-hidden="true">›</span></button>
   </div>
 
-  <div class="sdiv">Pesquisa (opcional)</div>
-  <div class="set-group">
-    <div class="set-row" style="cursor:default">
-      <div style="flex:1">
-        <div class="set-lbl">Contribuir para a pesquisa</div>
-        <div class="set-desc" id="sync-desc">A carregar…</div>
-      </div>
-      <button id="sync-btn" class="btn" style="padding:7px 16px;font-size:13px;width:auto;flex-shrink:0" onclick="syncToResearch()">Enviar</button>
-    </div>
-    <div class="set-row" style="cursor:default">
-      <div style="flex:1">
-        <div class="set-lbl">Envio automático</div>
-        <div class="set-desc">Envia seus dados à pesquisa ao concluir o onboarding e o pós-teste. Desligado, nada é enviado sozinho.</div>
-      </div>
-      <label class="switch">
-        <input type="checkbox" id="autosync-toggle" onchange="toggleAutoSync(this)">
-        <span class="switch-track"></span>
-      </label>
-    </div>
-  </div>
-
+  <details class="dados-group">
+    <summary><span><strong>Lembretes e atalho</strong><small>Calendário, notificação e instalar na tela de início</small></span></summary>
   <!-- Instalar -->
   <div class="sdiv">Atalho</div>
   <div class="set-group">
@@ -393,6 +373,75 @@
     </div>
   </div>
 
+  </details>
+
+  <details class="dados-group">
+    <summary><span><strong>Meus dados</strong><small>Privacidade, exportar e apagar</small></span></summary>
+  <!-- Privacidade -->
+  <div class="sdiv">Privacidade</div>
+  <div class="priv" style="flex-direction:column;gap:8px">
+    <div style="display:flex;gap:9px;align-items:flex-start">
+      <span style="font-size:16px;flex-shrink:0"></span>
+      <div class="priv-body"><strong>Local por padrão.</strong> Seus dados ficam salvos neste dispositivo (localStorage). Nada é enviado a servidores externos, a menos que você escolha "Enviar" na seção Pesquisa, e nesse caso vão dados de uso, respostas e textos dos registros, sem nome ou contato. Sem conta e sem login.</div>
+    </div>
+    <div class="priv-body" style="padding-left:25px">Limpar o histórico do navegador apaga os dados. Use a exportação para não perdê-los.</div>
+  </div>
+
+  <!-- Exportar -->
+  <div class="sdiv">Exportar</div>
+  <div class="set-group">
+    <div class="set-row" onclick="exportHTML()"><div><div class="set-lbl">Relatório pessoal (HTML)</div><div class="set-desc">Relatório com design, pronto para imprimir ou compartilhar</div></div><span class="set-arr">›</span></div>
+    <div class="set-row" onclick="exportJSON()"><div><div class="set-lbl">Dados brutos (JSON)</div><div class="set-desc">Todos os registros para arquivo ou envio à psicóloga</div></div><span class="set-arr">›</span></div>
+    <div class="set-row" onclick="exportCSV()"><div><div class="set-lbl">Exportar para pesquisa (CSV)</div><div class="set-desc">Inclui pré/pós-teste SPANE e crenças — para investigadores</div></div><span class="set-arr">›</span></div>
+  </div>
+
+  <!-- Gerenciar -->
+  <div class="sdiv">Gerenciar</div>
+  <div class="set-group">
+    <div class="set-row danger" onclick="openModal('del')"><div><div class="set-lbl">Apagar todos os dados</div><div class="set-desc">Remove tudo deste dispositivo. Irreversível.</div></div><span class="set-arr" style="color:#C0392B">›</span></div>
+  </div>
+
+  </details>
+
+  <details class="dados-group">
+    <summary><span><strong>Pesquisa (opcional)</strong><small>Participar e código de participante</small></span></summary>
+  <div class="sdiv">Pesquisa (opcional)</div>
+  <div class="set-group">
+    <div class="set-row" style="cursor:default">
+      <div style="flex:1">
+        <div class="set-lbl">Contribuir para a pesquisa</div>
+        <div class="set-desc" id="sync-desc">A carregar…</div>
+      </div>
+      <button id="sync-btn" class="btn" style="padding:7px 16px;font-size:13px;width:auto;flex-shrink:0" onclick="syncToResearch()">Enviar</button>
+    </div>
+    <div class="set-row" style="cursor:default">
+      <div style="flex:1">
+        <div class="set-lbl">Envio automático</div>
+        <div class="set-desc">Envia seus dados à pesquisa ao concluir o onboarding e o pós-teste. Desligado, nada é enviado sozinho.</div>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="autosync-toggle" onchange="toggleAutoSync(this)">
+        <span class="switch-track"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Código de participante -->
+  <div class="sdiv">Meu código de participante</div>
+  <div class="set-group">
+    <div class="set-row" style="cursor:default">
+      <div style="flex:1;min-width:0">
+        <div class="set-lbl" id="pid-code" style="font-family:monospace;font-size:12px;word-break:break-all">...</div>
+        <div class="set-desc">Guarde este código. Para pedir a remoção de dados já enviados, escreva para contato@psicoterapiaeafins.com.br informando-o.</div>
+      </div>
+      <button class="btn" style="padding:7px 16px;font-size:13px;width:auto;flex-shrink:0" onclick="copyParticipantId()">Copiar</button>
+    </div>
+  </div>
+
+  </details>
+
+  <details class="dados-group">
+    <summary><span><strong>Sobre este app</strong><small>Quem criou e o que o app não é</small></span></summary>
   <!-- Sobre o app -->
   <div class="sdiv">Sobre este app</div>
   <div class="legal-card">
@@ -422,47 +471,13 @@
     </div>
   </div>
 
-  <!-- Privacidade -->
-  <div class="sdiv">Privacidade</div>
-  <div class="priv" style="flex-direction:column;gap:8px">
-    <div style="display:flex;gap:9px;align-items:flex-start">
-      <span style="font-size:16px;flex-shrink:0"></span>
-      <div class="priv-body"><strong>Local por padrão.</strong> Seus dados ficam salvos neste dispositivo (localStorage). Nada é enviado a servidores externos, a menos que você escolha "Enviar" na seção Investigação, e nesse caso vão dados de uso, respostas e textos dos registros, sem nome ou contato. Sem conta e sem login.</div>
-    </div>
-    <div class="priv-body" style="padding-left:25px">Limpar o histórico do navegador apaga os dados. Use a exportação para não perdê-los.</div>
-  </div>
-
-  <!-- Código de participante -->
-  <div class="sdiv">Meu código de participante</div>
-  <div class="set-group">
-    <div class="set-row" style="cursor:default">
-      <div style="flex:1;min-width:0">
-        <div class="set-lbl" id="pid-code" style="font-family:monospace;font-size:12px;word-break:break-all">...</div>
-        <div class="set-desc">Guarde este código. Para pedir a remoção de dados já enviados, escreva para contato@psicoterapiaeafins.com.br informando-o.</div>
-      </div>
-      <button class="btn" style="padding:7px 16px;font-size:13px;width:auto;flex-shrink:0" onclick="copyParticipantId()">Copiar</button>
-    </div>
-  </div>
-
-  <!-- Exportar -->
-  <div class="sdiv">Exportar</div>
-  <div class="set-group">
-    <div class="set-row" onclick="exportHTML()"><div><div class="set-lbl">Relatório pessoal (HTML)</div><div class="set-desc">Relatório com design, pronto para imprimir ou compartilhar</div></div><span class="set-arr">›</span></div>
-    <div class="set-row" onclick="exportJSON()"><div><div class="set-lbl">Dados brutos (JSON)</div><div class="set-desc">Todos os registros para arquivo ou envio à psicóloga</div></div><span class="set-arr">›</span></div>
-    <div class="set-row" onclick="exportCSV()"><div><div class="set-lbl">Exportar para pesquisa (CSV)</div><div class="set-desc">Inclui pré/pós-teste SPANE e crenças — para investigadores</div></div><span class="set-arr">›</span></div>
-  </div>
-
-  <!-- Gerenciar -->
-  <div class="sdiv">Gerenciar</div>
-  <div class="set-group">
-    <div class="set-row danger" onclick="openModal('del')"><div><div class="set-lbl">Apagar todos os dados</div><div class="set-desc">Remove tudo deste dispositivo. Irreversível.</div></div><span class="set-arr" style="color:#C0392B">›</span></div>
-  </div>
-
   <div class="copyright-block">
     © 2026 <a href="https://www.psicoterapiaeafins.com.br" target="_blank">Psicoterapia e Afins</a> · Todos os direitos reservados<br>
     Recurso psicoeducativo — baseado em evidências — não substitui psicoterapia<br>
     <a href="https://www.instagram.com/psicoterapiaeafins" target="_blank">@psicoterapiaeafins</a>
   </div>
+  </details>
+
 </div>
 
 <!-- BOTTOM NAV -->
