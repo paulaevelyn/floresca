@@ -61,6 +61,7 @@ let D = {
   consentGiven: false,
   consentDate: null,
   autoSync: false,      // envio automático à pesquisa: só com opt-in explícito
+  firstPracticeSeen: false, // já viu a primeira prática de 1 minuto
   participantId: null,
   lastSync: null,
   pretest:  null,       // { spane:{p,n,b,answers}, beliefs:{score,answers}, date }
@@ -96,6 +97,7 @@ function load(){
       if(!D.participantId) D.participantId = generateUUID();
       if(D.consentDate  === undefined) D.consentDate  = null;
       if(D.autoSync     === undefined) D.autoSync     = false;
+      if(D.firstPracticeSeen === undefined) D.firstPracticeSeen = false;
       if(D.lastSync     === undefined) D.lastSync     = null;
       if(D.nickname     === undefined) D.nickname     = '';
       if(D.demographics === undefined) D.demographics = null;
@@ -194,7 +196,7 @@ const ALL_BADGES = [
   { id:'b_m6',   emoji:'💚', name:'Contentamento',       desc:'Completou o Módulo 6' },
   { id:'b_m7',   emoji:'🧪', name:'Destemido/a',         desc:'Completou o Módulo 7' },
   { id:'b_m8',   emoji:'🌳', name:'Jardim Completo',     desc:'Completou todos os módulos' },
-  { id:'b_str7', emoji:'🔥', name:'Constância',          desc:'7 dias seguidos' },
+  { id:'b_str7', emoji:'🔥', name:'Constância',          desc:'7 dias de cultivo' },
   { id:'b_d10',  emoji:'📔', name:'Caçador/a de Momentos', desc:'10+ momentos registrados' },
   { id:'b_xp',   emoji:'⭐', name:'Dedicado/a',          desc:'Atingiu 300 XP' },
   { id:'b_exp1', emoji:'🔬', name:'Cientista de Si',     desc:'Concluiu o 1º experimento' },
@@ -212,19 +214,11 @@ function checkBadges(){
   const expDone = D.experiments.filter(e=>e.status==='done').length;
   if(expDone >= 1) awardBadge('b_exp1');
   if(expDone >= 5) awardBadge('b_exp5');
-  // streak
-  if(D.entries.length){
-    const dates = [...new Set(D.entries.map(e=>e.date))].sort().reverse();
-    let streak=0, t=today(), y=prevDay(1);
-    if(dates[0]===t||dates[0]===y){
-      streak=1;
-      for(let i=1;i<dates.length;i++){
-        const a=new Date(dates[i-1]+'T12:00'),b2=new Date(dates[i]+'T12:00');
-        if(Math.round((a-b2)/864e5)===1) streak++; else break;
-      }
-    }
-    if(streak>=7) awardBadge('b_str7');
-  }
+  // dias de cultivo (acumulado: pausas não zeram o progresso)
+  if(calcTotalDays() >= 7) awardBadge('b_str7');
+}
+function calcTotalDays(){
+  return new Set(D.entries.map(e=>e.date)).size;
 }
 
 /* ══════════════════════════════════
@@ -1027,7 +1021,71 @@ let _pt = {
   beliefAnswers: [], beliefQ: 0,
 };
 
-function renderPretest(){
+/* Primeira prática curta (1 min), oferecida antes do pré-teste para a pessoa sentir um benefício cedo.
+   Respiração com expiração prolongada (sistema calmante, Gilbert; ver Módulo 6). Sempre pode pular. */
+let _fp = { timer:null };
+function firstPracticeStop(){ if(_fp.timer){ clearInterval(_fp.timer); _fp.timer=null; } }
+function renderFirstPractice(){
+  firstPracticeStop();
+  document.getElementById('pretest-content').innerHTML = `
+  <div class="pretest-wrap" style="text-align:center;padding-top:48px">
+    <div style="font-size:48px;margin-bottom:14px">🌬️</div>
+    <h2 style="font-size:22px;font-weight:800;margin-bottom:10px">Um minuto só para você</h2>
+    <p style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:20px">
+      Antes da avaliação, uma pausa curta: inspire pelo nariz e solte o ar devagar, mais longo do que a inspiração.
+      Se algo incomodar, respire do seu jeito ou pule. Não existe jeito errado.
+    </p>
+    <div id="fp-circle" style="width:120px;height:120px;border-radius:50%;margin:0 auto 14px;background:var(--mint-l,#DDF1EA);border:2px solid var(--mint-d,#1B6A58);transition:transform 4s ease-in-out"></div>
+    <div id="fp-text" style="font-size:16px;font-weight:700;min-height:24px;margin-bottom:6px"> </div>
+    <div id="fp-time" style="font-size:13px;color:var(--light);margin-bottom:18px"> </div>
+    <button class="btn" id="fp-start" onclick="firstPracticeStart()">Começar (1 minuto)</button>
+    <button class="btn ghost" style="margin-top:0" onclick="firstPracticeSkip()">Pular</button>
+  </div>`;
+}
+function firstPracticeStart(){
+  const btn=document.getElementById('fp-start'); if(btn) btn.style.display='none';
+  const circle=document.getElementById('fp-circle'), txt=document.getElementById('fp-text'), tm=document.getElementById('fp-time');
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const TOTAL=60; let t=0; let phaseLeft=0, inhale=true;
+  const tick=()=>{
+    if(t>=TOTAL){ firstPracticeDone(); return; }
+    if(phaseLeft<=0){
+      inhale = !inhale || t===0;
+      if(t===0) inhale = true;
+      phaseLeft = inhale ? 4 : 6;
+      txt.textContent = inhale ? 'Inspire' : 'Solte o ar devagar';
+      if(!reduce){ circle.style.transition='transform '+phaseLeft+'s ease-in-out'; circle.style.transform = inhale ? 'scale(1.35)' : 'scale(1)'; }
+    }
+    phaseLeft--; t++;
+    tm.textContent = (TOTAL-t)+'s';
+  };
+  tick();
+  _fp.timer = setInterval(tick, 1000);
+}
+function firstPracticeDone(){
+  firstPracticeStop();
+  D.firstPracticeDone = true; D.firstPracticeSeen = true;
+  trackAppEvent('first_practice_done');
+  awardXP(10, 'primeira prática concluída');
+  document.getElementById('pretest-content').innerHTML = `
+  <div class="pretest-wrap" style="text-align:center;padding-top:60px">
+    <div style="font-size:52px;margin-bottom:16px">🌱</div>
+    <h2 style="font-size:22px;font-weight:800;margin-bottom:10px">Pronto, esse foi o primeiro cuidado.</h2>
+    <p style="font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:24px">
+      Notou alguma diferença no corpo ou na mente? Qualquer resposta serve. Agora, uma avaliação rápida para marcar o seu ponto de partida.
+    </p>
+    <button class="btn" style="max-width:320px;margin:0 auto" onclick="renderPretest(true)">Continuar para a avaliação</button>
+  </div>`;
+}
+function firstPracticeSkip(){
+  firstPracticeStop();
+  D.firstPracticeSeen = true;
+  trackAppEvent('first_practice_skipped');
+  save();
+  renderPretest(true);
+}
+function renderPretest(skipIntro){
+  if(!skipIntro && !D.pretest && !D.firstPracticeSeen){ renderFirstPractice(); return; }
   _pt.phase='spane';
   _pt.spaneAnswers=[]; _pt.spaneQ=0;
   _pt.beliefAnswers=[]; _pt.beliefQ=0;
@@ -1308,7 +1366,7 @@ function renderHome(){
   const done = MODULES.filter(m=>D.moduleProgress[m.id]?.done).length;
   const streak = calcStreak();
   document.getElementById('hs-mod').textContent = done+'/'+MODULES.length;
-  document.getElementById('hs-str').textContent = streak;
+  document.getElementById('hs-str').textContent = calcTotalDays();
   document.getElementById('hs-xp').textContent  = D.xp;
   document.getElementById('h-assess-sub').textContent = D.assessment?'Refazer avaliação':'SPANE · Como você se sente';
 
@@ -2012,8 +2070,8 @@ function renderProgress(){
     const savored=D.entries.filter(e=>(e.savoring||[]).some(s=>s!=='Ainda não saboreei')).length;
     const pctS=Math.round(savored/D.entries.length*100);
     insights.push({c:'l',t:'🍯 Taxa de saboreio',b:`Em <strong>${pctS}% dos momentos</strong> você fez algo para amplificar a experiência. Saborear é o multiplicador do notar.`});
-    const streak=calcStreak();
-    if(streak>0) insights.push({c:'',t:'🔥 Sequência atual',b:`<strong>${streak} dia${streak!==1?'s':''}</strong> de registro consecutivo. A constância rega mais que a intensidade.`});
+    const totalDays=calcTotalDays();
+    if(totalDays>0) insights.push({c:'',t:'🌿 Dias de cultivo',b:`<strong>${totalDays} dia${totalDays!==1?'s':''}</strong> em que você registrou um momento. Cada dia conta, e as pausas não apagam o que você já cultivou.`});
   }
   // experimentos
   const expDone = D.experiments.filter(e=>e.status==='done');
@@ -2363,7 +2421,7 @@ function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg
 function renderNudge(){
   const el = document.getElementById('h-nudge');
   if(!el) return;
-  const streak = calcStreak();
+  const totalDays = calcTotalDays();
   const lastEntry = D.entries.length ? [...D.entries].sort((a,b)=>b.ts-a.ts)[0] : null;
   const daysSince = lastEntry ? Math.floor((Date.now()-lastEntry.ts)/864e5) : null;
   const halfMod = MODULES.find(m=>{ const mp=D.moduleProgress[m.id]; return mp && !mp.done && mp.steps?.some(Boolean); });
@@ -2427,12 +2485,12 @@ function renderNudge(){
       <button class="nudge-btn" onclick="openModule('${halfMod.id}')">Continuar</button>
     </div>`;
   }
-  // 4. Streak ativo — reforço sem pressão
-  else if(streak >= 2){
+  // 4. Dias de cultivo acumulados — reforço sem pressão (nunca zera)
+  else if(totalDays >= 2){
     html = `<div class="nudge amber">
-      <div class="nudge-icon">🔥</div>
-      <div class="nudge-body"><strong>${streak} dias seguidos de cultivo.</strong>
-      A constância — não a perfeição — é o que treina o radar.</div>
+      <div class="nudge-icon">🌿</div>
+      <div class="nudge-body"><strong>${totalDays} dias de cultivo até agora.</strong>
+      Cada dia conta, e pausas fazem parte do cultivo. É a prática repetida, não a perfeição, que treina o radar.</div>
     </div>`;
   }
   el.innerHTML = html;
