@@ -37,6 +37,61 @@ const BRAND_FOOTER_HTML = `
 </div>`;
 
 /* ══════════════════════════════════
+   ÍCONES — traço fino (1.5px), cantos arredondados, estilo Lucide
+   Direção do design system: leves, lineares, sem preenchimento.
+   ══════════════════════════════════ */
+const ICONS = {
+ "sprout": "<path d=\"M7 20h10\"/><path d=\"M10 20c5.5-2.5.8-6.4 3-10\"/><path d=\"M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z\"/><path d=\"M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z\"/>",
+ "sun": "<circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41\"/>",
+ "search": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m21 21-4.3-4.3\"/>",
+ "heart": "<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/>",
+ "flask": "<path d=\"M9 3h6\"/><path d=\"M10 3v6.6L4.9 18a2 2 0 0 0 1.8 3h10.6a2 2 0 0 0 1.8-3L14 9.6V3\"/><path d=\"M7.5 14h9\"/>",
+ "book": "<path d=\"M4 19.5A2.5 2.5 0 0 1 6.5 17H20\"/><path d=\"M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z\"/>",
+ "leaf": "<path d=\"M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z\"/><path d=\"M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12\"/>",
+ "flower": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5\"/><path d=\"M12 7.5V9M7.5 12H9M16.5 12H15M12 16.5V15\"/>",
+ "star": "<path d=\"m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"/>",
+ "gift": "<rect x=\"3\" y=\"8\" width=\"18\" height=\"4\" rx=\"1\"/><path d=\"M12 8v13\"/><path d=\"M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7\"/><path d=\"M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5\"/>",
+ "message": "<path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"/>",
+ "coffee": "<path d=\"M17 8h1a4 4 0 1 1 0 8h-1\"/><path d=\"M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z\"/><path d=\"M6 2v2M10 2v2M14 2v2\"/>",
+ "eye": "<path d=\"M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/>",
+ "music": "<path d=\"M9 18V5l12-2v13\"/><circle cx=\"6\" cy=\"18\" r=\"3\"/><circle cx=\"18\" cy=\"16\" r=\"3\"/>",
+ "cloud": "<path d=\"M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z\"/>",
+ "award": "<circle cx=\"12\" cy=\"8\" r=\"6\"/><path d=\"M15.48 12.89 17 22l-5-3-5 3 1.52-9.11\"/>",
+ "sunrise": "<path d=\"M12 2v8\"/><path d=\"m4.93 10.93 1.41 1.41\"/><path d=\"M2 18h2M20 18h2\"/><path d=\"m19.07 10.93-1.41 1.41\"/><path d=\"M22 22H2\"/><path d=\"m8 6 4-4 4 4\"/><path d=\"M16 18a4 4 0 0 0-8 0\"/>",
+ "shield": "<path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"/>",
+ "tree": "<path d=\"M12 22v-7\"/><path d=\"M12 15a6 6 0 1 0-6-6c0 3.3 2.7 6 6 6z\"/><path d=\"M12 15a6 6 0 1 0 6-6\"/>",
+ "palette": "<circle cx=\"13.5\" cy=\"6.5\" r=\".6\"/><circle cx=\"17.5\" cy=\"10.5\" r=\".6\"/><circle cx=\"8.5\" cy=\"7.5\" r=\".6\"/><circle cx=\"6.5\" cy=\"12.5\" r=\".6\"/><path d=\"M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.7-.8 1.7-1.7 0-.4-.2-.8-.5-1.1-.3-.3-.5-.7-.5-1.1 0-.9.8-1.7 1.7-1.7H16c3.1 0 5.5-2.4 5.5-5.5C21.5 6 17.5 2 12 2z\"/>",
+ "lock": "<rect x=\"3\" y=\"11\" width=\"18\" height=\"11\" rx=\"2\"/><path d=\"M7 11V7a5 5 0 0 1 10 0v4\"/>",
+ "trash": "<path d=\"M3 6h18\"/><path d=\"M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6\"/><path d=\"M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"/>",
+ "phone": "<path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z\"/>",
+ "alert": "<path d=\"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3\"/><path d=\"M12 9v4M12 17h.01\"/>",
+ "building": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"18\" rx=\"1\"/><path d=\"M12 8v6M9 11h6\"/>",
+ "globe": "<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M2 12h20\"/><path d=\"M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z\"/>",
+ "mobile": "<rect x=\"5\" y=\"2\" width=\"14\" height=\"20\" rx=\"2\"/><path d=\"M12 18h.01\"/>",
+ "bell": "<path d=\"M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9\"/><path d=\"M10.3 21a1.94 1.94 0 0 0 3.4 0\"/>",
+ "compass": "<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z\"/>",
+ "calendar": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M16 2v4M8 2v4M3 10h18\"/>",
+ "check": "<path d=\"M20 6 9 17l-5-5\"/>",
+ "users": "<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\"/><circle cx=\"9\" cy=\"7\" r=\"4\"/><path d=\"M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75\"/>",
+ "zap": "<path d=\"M13 2 3 14h9l-1 8 10-12h-9l1-8z\"/>",
+ "smile": "<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01\"/>",
+ "moon": "<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\"/>",
+ "target": "<circle cx=\"12\" cy=\"12\" r=\"10\"/><circle cx=\"12\" cy=\"12\" r=\"6\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/>",
+ "mountain": "<path d=\"m8 3 4 8 5-5 5 15H2L8 3z\"/>",
+ "info": "<circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 16v-4M12 8h.01\"/>",
+ "chevron": "<path d=\"m9 18 6-6-6-6\"/>",
+ "lifebuoy": "<circle cx=\"12\" cy=\"12\" r=\"10\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"m4.93 4.93 4.24 4.24M14.83 9.17l4.24-4.24M14.83 14.83l4.24 4.24M9.17 14.83l-4.24 4.24\"/>"
+};
+function ico(name,size){
+  size = size || 24;
+  const body = ICONS[name]; if(!body) return '';
+  return '<svg class="ico" viewBox="0 0 24 24" width="'+size+'" height="'+size+'" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+body+'</svg>';
+}
+function iconize(root){
+  (root||document).querySelectorAll('[data-ico]:empty').forEach(el=>{ el.innerHTML = ico(el.getAttribute('data-ico'), parseInt(el.getAttribute('data-ico-size')||'0')||undefined); });
+}
+
+/* ══════════════════════════════════
    PERSISTENCE
    ══════════════════════════════════ */
 const SK = 'floresca_v1';
@@ -135,13 +190,13 @@ function supportCardHTML(){
       e procurá-la é um ato de coragem, não de fraqueza.
     </div>
     <div class="crisis-resources">
-      <a href="tel:188" class="crisis-res"><span></span><div><strong>CVV — 188</strong><small>Ligação gratuita, 24h, todos os dias</small></div></a>
-      <a href="https://www.cvv.org.br" target="_blank" class="crisis-res"><span></span><div><strong>Chat do CVV</strong><small>cvv.org.br — conversa por escrito</small></div></a>
-      <div class="crisis-res"><span></span><div><strong>CAPS ou UBS</strong><small>Atendimento gratuito pelo SUS na sua cidade</small></div></div>
-      <div class="crisis-res"><span></span><div><strong>SAMU — 192</strong><small>Em emergência, ligue imediatamente</small></div></div>
-      <a href="tel:988" class="crisis-res"><span></span><div><strong>EUA e Canadá — 988</strong><small>Linha de crise e prevenção do suicídio, ligação ou SMS, 24h. Emergência: 911</small></div></a>
-      <a href="tel:024" class="crisis-res"><span></span><div><strong>Espanha — 024</strong><small>Linha de atenção ao comportamento suicida, 24h. Emergência: 112</small></div></a>
-      <div class="crisis-res"><span></span><div><strong>Em outro país</strong><small>Ligue para o número de emergência local (112 na Europa)</small></div></div>
+      <a href="tel:188" class="crisis-res"><span>${ico('phone',22)}</span><div><strong>CVV — 188</strong><small>Ligação gratuita, 24h, todos os dias</small></div></a>
+      <a href="https://www.cvv.org.br" target="_blank" class="crisis-res"><span>${ico('message',22)}</span><div><strong>Chat do CVV</strong><small>cvv.org.br — conversa por escrito</small></div></a>
+      <div class="crisis-res"><span>${ico('building',22)}</span><div><strong>CAPS ou UBS</strong><small>Atendimento gratuito pelo SUS na sua cidade</small></div></div>
+      <div class="crisis-res"><span>${ico('alert',22)}</span><div><strong>SAMU — 192</strong><small>Em emergência, ligue imediatamente</small></div></div>
+      <a href="tel:988" class="crisis-res"><span>${ico('globe',22)}</span><div><strong>EUA e Canadá — 988</strong><small>Linha de crise e prevenção do suicídio, ligação ou SMS, 24h. Emergência: 911</small></div></a>
+      <a href="tel:024" class="crisis-res"><span>${ico('globe',22)}</span><div><strong>Espanha — 024</strong><small>Linha de atenção ao comportamento suicida, 24h. Emergência: 112</small></div></a>
+      <div class="crisis-res"><span>${ico('globe',22)}</span><div><strong>Em outro país</strong><small>Ligue para o número de emergência local (112 na Europa)</small></div></div>
     </div>
   </div>`;
 }
@@ -315,16 +370,16 @@ function showSupport(){
    AS 10 EMOÇÕES POSITIVAS (Fredrickson, 2009)
    ══════════════════════════════════ */
 const EMOTIONS = [
-  { id:'alegria',    emoji:'', name:'Alegria',     desc:'Quando algo bom e inesperado acontece' },
-  { id:'gratidao',   emoji:'', name:'Gratidão',    desc:'Quando você recebe algo valioso de alguém' },
-  { id:'serenidade', emoji:'', name:'Serenidade',  desc:'Quando tudo está bem e você pode relaxar' },
-  { id:'interesse',  emoji:'', name:'Interesse',   desc:'Quando algo novo desperta sua curiosidade' },
-  { id:'esperanca',  emoji:'', name:'Esperança',   desc:'Quando você acredita que algo pode melhorar' },
-  { id:'orgulho',    emoji:'', name:'Orgulho',     desc:'Quando você conquista algo com o seu esforço' },
-  { id:'diversao',   emoji:'', name:'Diversão',    desc:'Quando algo é engraçado e compartilhado' },
-  { id:'inspiracao', emoji:'', name:'Inspiração',  desc:'Quando você testemunha a excelência humana' },
-  { id:'admiracao',  emoji:'', name:'Admiração',   desc:'Quando algo grandioso te faz sentir pequeno/a (awe)' },
-  { id:'amor',       emoji:'', name:'Amor',        desc:'Micro-momentos de conexão genuína com alguém' },
+  { id:'alegria',    emoji:'', ico:'sun', name:'Alegria',     desc:'Quando algo bom e inesperado acontece' },
+  { id:'gratidao',   emoji:'', ico:'gift', name:'Gratidão',    desc:'Quando você recebe algo valioso de alguém' },
+  { id:'serenidade', emoji:'', ico:'moon', name:'Serenidade',  desc:'Quando tudo está bem e você pode relaxar' },
+  { id:'interesse',  emoji:'', ico:'search', name:'Interesse',   desc:'Quando algo novo desperta sua curiosidade' },
+  { id:'esperanca',  emoji:'', ico:'sunrise', name:'Esperança',   desc:'Quando você acredita que algo pode melhorar' },
+  { id:'orgulho',    emoji:'', ico:'award', name:'Orgulho',     desc:'Quando você conquista algo com o seu esforço' },
+  { id:'diversao',   emoji:'', ico:'smile', name:'Diversão',    desc:'Quando algo é engraçado e compartilhado' },
+  { id:'inspiracao', emoji:'', ico:'zap', name:'Inspiração',  desc:'Quando você testemunha a excelência humana' },
+  { id:'admiracao',  emoji:'', ico:'star', name:'Admiração',   desc:'Quando algo grandioso te faz sentir pequeno/a (awe)' },
+  { id:'amor',       emoji:'', ico:'heart', name:'Amor',        desc:'Micro-momentos de conexão genuína com alguém' },
 ];
 const SAVORING_CHIPS = ['Parei para notar','Respirei e prolonguei','Compartilhei com alguém','Agradeci','Anotei/fotografei','Revivi mais tarde','Ainda não saboreei'];
 
@@ -411,7 +466,7 @@ function svgThreeSystems(){
 
 function emoGridHTML(){
   return `<div class="emo-grid">${EMOTIONS.map(e=>`
-    <div class="emo-cell"><span class="emo-emoji">${e.emoji}</span>
+    <div class="emo-cell"><span class="emo-emoji">${ico(e.ico,20)}</span>
       <div><div class="emo-name">${e.name}</div><div class="emo-desc">${e.desc}</div></div>
     </div>`).join('')}</div>`;
 }
@@ -424,7 +479,7 @@ const MODULES = [
      M1: Por que cultivar emoções positivas
      ───────────────────────────────────────── */
   {
-    id:'m1', color:'mint', emoji:'',
+    id:'m1', color:'mint', emoji:'', ico:'sunrise',
     levelTag:'Preparar o Solo',
     title:'Por que Cultivar Emoções Positivas',
     tagline:'A ciência do que faz bem',
@@ -479,7 +534,7 @@ ${svgBroaden()}
      M2: O repertório — 10 emoções positivas
      ───────────────────────────────────────── */
   {
-    id:'m2', color:'lav', emoji:'',
+    id:'m2', color:'lav', emoji:'', ico:'palette',
     levelTag:'Preparar o Solo',
     title:'O Repertório: 10 Emoções Positivas',
     tagline:'Nomear com precisão amplia o sentir',
@@ -534,7 +589,7 @@ ${emoGridHTML()}
      M3: Notar — o radar do positivo
      ───────────────────────────────────────── */
   {
-    id:'m3', color:'amber', emoji:'',
+    id:'m3', color:'amber', emoji:'', ico:'search',
     levelTag:'Notar e Saborear',
     title:'Notar: o Radar do Positivo',
     tagline:'Treinar a atenção para o que já vai bem',
@@ -588,7 +643,7 @@ ${emoGridHTML()}
      M4: Saborear
      ───────────────────────────────────────── */
   {
-    id:'m4', color:'coral', emoji:'',
+    id:'m4', color:'coral', emoji:'', ico:'coffee',
     levelTag:'Notar e Saborear',
     title:'Saborear: Presente, Passado e Futuro',
     tagline:'Amplificar e prolongar o que é bom',
@@ -644,7 +699,7 @@ ${emoGridHTML()}
      M5: Gratidão
      ───────────────────────────────────────── */
   {
-    id:'m5', color:'mint', emoji:'',
+    id:'m5', color:'mint', emoji:'', ico:'gift',
     levelTag:'Aprofundar',
     title:'Gratidão que Transforma',
     tagline:'A prática com mais evidência da área',
@@ -700,7 +755,7 @@ ${emoGridHTML()}
      M6: Contentamento e segurança (TFC)
      ───────────────────────────────────────── */
   {
-    id:'m6', color:'lav', emoji:'',
+    id:'m6', color:'lav', emoji:'', ico:'shield',
     levelTag:'Aprofundar',
     title:'Contentamento e Segurança (TFC)',
     tagline:'O bem-estar que não depende de conquista',
@@ -749,7 +804,7 @@ ${svgThreeSystems()}
      M7: Crenças que bloqueiam + experimentos
      ───────────────────────────────────────── */
   {
-    id:'m7', color:'coral', emoji:'',
+    id:'m7', color:'coral', emoji:'', ico:'flask',
     levelTag:'Florescer',
     title:'Crenças que Bloqueiam a Alegria',
     tagline:'Testar na prática os medos do bem-estar',
@@ -819,7 +874,7 @@ ${svgThreeSystems()}
      M8: Um jardim que dura
      ───────────────────────────────────────── */
   {
-    id:'m8', color:'amber', emoji:'',
+    id:'m8', color:'amber', emoji:'', ico:'tree',
     levelTag:'Florescer',
     title:'Um Jardim que Dura',
     tagline:'Transformar práticas em recursos para a vida',
@@ -830,11 +885,11 @@ ${svgThreeSystems()}
         title:'Bem-estar tem arquitetura',
         content:`<p class="step-text">Seligman resumiu os pilares do bem-estar duradouro no modelo <strong>PERMA</strong>:</p>
 <div class="emo-grid" style="grid-template-columns:1fr">
-  <div class="emo-cell"><span class="emo-emoji"></span><div><div class="emo-name">P — Emoções Positivas</div><div class="emo-desc">Tudo que você treinou até aqui: notar, saborear, gratidão</div></div></div>
-  <div class="emo-cell"><span class="emo-emoji"></span><div><div class="emo-name">E — Engajamento</div><div class="emo-desc">Atividades que te absorvem por inteiro (flow)</div></div></div>
-  <div class="emo-cell"><span class="emo-emoji"></span><div><div class="emo-name">R — Relacionamentos</div><div class="emo-desc">O maior preditor de bem-estar em todos os estudos</div></div></div>
-  <div class="emo-cell"><span class="emo-emoji"></span><div><div class="emo-name">M — Significado (Meaning)</div><div class="emo-desc">Fazer parte de algo maior que você</div></div></div>
-  <div class="emo-cell"><span class="emo-emoji"></span><div><div class="emo-name">A — Realização (Accomplishment)</div><div class="emo-desc">Progredir em algo que importa — e reconhecer o progresso</div></div></div>
+  <div class="emo-cell"><span class="emo-emoji">${ico('smile',20)}</span><div><div class="emo-name">P — Emoções Positivas</div><div class="emo-desc">Tudo que você treinou até aqui: notar, saborear, gratidão</div></div></div>
+  <div class="emo-cell"><span class="emo-emoji">${ico('target',20)}</span><div><div class="emo-name">E — Engajamento</div><div class="emo-desc">Atividades que te absorvem por inteiro (flow)</div></div></div>
+  <div class="emo-cell"><span class="emo-emoji">${ico('users',20)}</span><div><div class="emo-name">R — Relacionamentos</div><div class="emo-desc">O maior preditor de bem-estar em todos os estudos</div></div></div>
+  <div class="emo-cell"><span class="emo-emoji">${ico('compass',20)}</span><div><div class="emo-name">M — Significado (Meaning)</div><div class="emo-desc">Fazer parte de algo maior que você</div></div></div>
+  <div class="emo-cell"><span class="emo-emoji">${ico('award',20)}</span><div><div class="emo-name">A — Realização (Accomplishment)</div><div class="emo-desc">Progredir em algo que importa — e reconhecer o progresso</div></div></div>
 </div>
 <p class="step-text" style="margin-top:10px">E dois avisos da ciência para o longo prazo:</p>
 <div style="display:flex;flex-direction:column;gap:8px;margin:12px 0">
@@ -900,40 +955,40 @@ function orderedModules(){
    LABORATÓRIO — banco de experimentos
    ══════════════════════════════════ */
 const EXPERIMENTS = [
-  { id:'e1',  emoji:'', title:'Mensagem de gratidão',      emotion:'Gratidão',    time:'5 min',
+  { id:'e1',  emoji:'', ico:'message', title:'Mensagem de gratidão',      emotion:'Gratidão',    time:'5 min',
     desc:'Envie hoje uma mensagem específica a alguém, agradecendo por algo concreto que essa pessoa fez — sem ser data especial, sem motivo "oficial".',
     belief:'"Vão achar estranho / não vai fazer diferença."' },
-  { id:'e2',  emoji:'', title:'Refeição saboreada',        emotion:'Serenidade',  time:'15 min',
+  { id:'e2',  emoji:'', ico:'coffee', title:'Refeição saboreada',        emotion:'Serenidade',  time:'15 min',
     desc:'Faça UMA refeição sem telas. Nos três primeiros garfos, atenção total: sabor, textura, temperatura. Depois coma normalmente.',
     belief:'"Comer é só abastecer, não dá para curtir isso."' },
-  { id:'e3',  emoji:'', title:'Compartilhar a boa notícia', emotion:'Alegria',     time:'5 min',
+  { id:'e3',  emoji:'', ico:'users', title:'Compartilhar a boa notícia', emotion:'Alegria',     time:'5 min',
     desc:'Aconteceu algo bom, mesmo pequeno? Conte hoje para alguém que responde bem — com detalhes, deixando-se animar ao contar.',
     belief:'"Falar das minhas coisas boas é me exibir."' },
-  { id:'e4',  emoji:'', title:'Caminhada de admiração',     emotion:'Admiração',   time:'15 min',
+  { id:'e4',  emoji:'', ico:'mountain', title:'Caminhada de admiração',     emotion:'Admiração',   time:'15 min',
     desc:'Caminhe 15 minutos procurando deliberadamente o que você nunca notou: uma árvore antiga, um detalhe de prédio, o céu. Pare em 3 coisas.',
     belief:'"Meu bairro/dia a dia não tem nada de especial."' },
-  { id:'e5',  emoji:'', title:'Gentileza anônima',          emotion:'Amor',        time:'10 min',
+  { id:'e5',  emoji:'', ico:'gift', title:'Gentileza anônima',          emotion:'Amor',        time:'10 min',
     desc:'Faça um ato de gentileza sem receber crédito: um elogio sincero, pagar um café, deixar algo bom no caminho de alguém.',
     belief:'"Gestos pequenos não mudam nada."' },
-  { id:'e6',  emoji:'', title:'Uma música, corpo inteiro',  emotion:'Diversão',    time:'5 min',
+  { id:'e6',  emoji:'', ico:'music', title:'Uma música, corpo inteiro',  emotion:'Diversão',    time:'5 min',
     desc:'Escolha UMA música que você ama e dance ou cante junto — sozinho/a se preferir, do início ao fim, sem fazer mais nada.',
     belief:'"Isso é ridículo / não tenho mais idade para isso."' },
-  { id:'e7',  emoji:'', title:'Beleza do dia (3 dias)',     emotion:'Interesse',   time:'1 min/dia',
+  { id:'e7',  emoji:'', ico:'eye', title:'Beleza do dia (3 dias)',     emotion:'Interesse',   time:'1 min/dia',
     desc:'Por 3 dias, fotografe UMA coisa bonita ou interessante por dia. No 3º dia, reveja as três fotos com calma.',
     belief:'"Não tenho olhar para essas coisas."' },
-  { id:'e8',  emoji:'', title:'Dez minutos de céu',         emotion:'Serenidade',  time:'10 min',
+  { id:'e8',  emoji:'', ico:'cloud', title:'Dez minutos de céu',         emotion:'Serenidade',  time:'10 min',
     desc:'Assista ao pôr do sol, ao céu ou à rua da janela por 10 minutos, sem celular, sem tarefa. Só olhar — como quem não deve nada.',
     belief:'"Ficar parado/a é desperdiçar tempo."' },
-  { id:'e9',  emoji:'', title:'Relembrar uma conquista',    emotion:'Orgulho',     time:'10 min',
+  { id:'e9',  emoji:'', ico:'award', title:'Relembrar uma conquista',    emotion:'Orgulho',     time:'10 min',
     desc:'Escreva sobre uma conquista sua — o obstáculo, o que VOCÊ fez, como conseguiu. Termine com: "isso fui eu que fiz".',
     belief:'"Sentir orgulho é se achar demais."' },
-  { id:'e10', emoji:'', title:'Plantar uma antecipação',    emotion:'Esperança',   time:'10 min',
+  { id:'e10', emoji:'', ico:'calendar', title:'Plantar uma antecipação',    emotion:'Esperança',   time:'10 min',
     desc:'Marque algo bom e concreto para os próximos 7 dias (com hora!). Nos dias antes, imagine 3 detalhes dele. Saboreie antes de viver.',
     belief:'"Melhor não criar expectativa para não me frustrar."' },
-  { id:'e11', emoji:'', title:'Descanso declarado',         emotion:'Contentamento', time:'30 min',
+  { id:'e11', emoji:'', ico:'moon', title:'Descanso declarado',         emotion:'Contentamento', time:'30 min',
     desc:'Agende 30 minutos de descanso DE PROPÓSITO (não "sobrou tempo"): série, banho longo, sofá. Antes, diga: "isto é descanso, e é legítimo".',
     belief:'"Descansar sem ter terminado tudo é preguiça."' },
-  { id:'e12', emoji:'', title:'Micro-momento de conexão',   emotion:'Amor',        time:'5 min',
+  { id:'e12', emoji:'', ico:'heart', title:'Micro-momento de conexão',   emotion:'Amor',        time:'5 min',
     desc:'Tenha hoje UMA conversa de verdade — olho no olho ou voz — com alguém: um colega, o porteiro, um familiar. Pergunte e ouça de verdade.',
     belief:'"Conversa pequena é vazia, ninguém liga de verdade."' },
 ];
@@ -1114,10 +1169,10 @@ function spaneLevel(b){
   return b>=12?'flor':b>=3?'verde':b>=-3?'fragil':'seco';
 }
 const SPANE_LEVEL_INFO = {
-  flor:   { icon:'', title:'Florescendo',          msg:'As emoções positivas têm presença forte na sua vida. O cultivo aqui vai torná-las ainda mais conscientes e resilientes.' },
-  verde:  { icon:'', title:'Equilíbrio positivo',  msg:'O saldo emocional está a favor do positivo, com espaço claro para crescer — especialmente em frequência e intensidade.' },
-  fragil: { icon:'', title:'Equilíbrio frágil',    msg:'Positivas e difíceis estão praticamente empatadas. É exatamente o cenário em que este treino costuma fazer mais diferença.' },
-  seco:   { icon:'', title:'Uma fase mais pesada', msg:'Nas últimas semanas, as emoções difíceis pesaram mais. É um retrato do momento, não de quem você é. O cultivo pode ajudar — e, se o peso for grande, conversar com um/a profissional pode ajudar muito mais.' },
+  flor:   { icon:'flower', title:'Florescendo',          msg:'As emoções positivas têm presença forte na sua vida. O cultivo aqui vai torná-las ainda mais conscientes e resilientes.' },
+  verde:  { icon:'leaf', title:'Equilíbrio positivo',  msg:'O saldo emocional está a favor do positivo, com espaço claro para crescer — especialmente em frequência e intensidade.' },
+  fragil: { icon:'sprout', title:'Equilíbrio frágil',    msg:'Positivas e difíceis estão praticamente empatadas. É exatamente o cenário em que este treino costuma fazer mais diferença.' },
+  seco:   { icon:'cloud', title:'Uma fase mais pesada', msg:'Nas últimas semanas, as emoções difíceis pesaram mais. É um retrato do momento, não de quem você é. O cultivo pode ajudar — e, se o peso for grande, conversar com um/a profissional pode ajudar muito mais.' },
 };
 
 /* ══════════════════════════════════
@@ -1542,11 +1597,11 @@ function renderHomeMore(){
   const nm = nextModule();
   const expActive = D.experiments.find(e=>e.status==='active');
   const expDone = D.experiments.filter(e=>e.status==='done').length;
-  const row = (click,title,sub)=>`<button class="row-link" onclick="${click}"><span><strong>${title}</strong><small>${sub}</small></span><span class="set-arr" aria-hidden="true">›</span></button>`;
+  const row = (click,title,sub,ic)=>`<button class="row-link" onclick="${click}"><span class="rl-ico">${ico(ic||'leaf',22)}</span><span class="rl-txt"><strong>${title}</strong><small>${sub}</small></span><span class="set-arr" aria-hidden="true">›</span></button>`;
   let html = '<div class="sdiv">Para quando quiser</div><div class="set-group">';
-  if(nm) html += row(`openModule('${nm.id}')`, 'Próximo para você', esc(nm.title));
-  html += row("goTo('lab')", 'Laboratório', expActive ? '1 experimento em andamento' : expDone ? expDone+' concluído'+(expDone>1?'s':'') : 'Preveja, teste, compare');
-  if(assessSuggested()) html += row("goTo('assess')", 'Autoavaliação', D.assessment ? 'Já faz um tempo: quer ver como você está?' : 'SPANE: como você se sente');
+  if(nm) html += row(`openModule('${nm.id}')`, 'Próximo para você', esc(nm.title), nm.ico);
+  html += row("goTo('lab')", 'Laboratório', expActive ? '1 experimento em andamento' : expDone ? expDone+' concluído'+(expDone>1?'s':'') : 'Preveja, teste, compare', 'flask');
+  if(assessSuggested()) html += row("goTo('assess')", 'Autoavaliação', D.assessment ? 'Já faz um tempo: quer ver como você está?' : 'SPANE: como você se sente', 'compass');
   html += '</div><div class="support-line"><button class="link-btn" onclick="showSupport()">Preciso de apoio agora</button></div>';
   el.innerHTML = html;
 }
@@ -1627,10 +1682,10 @@ function renderModuleList(){
     const unlocked = isUnlocked(m);
     const done = D.moduleProgress[m.id]?.done;
     const pct  = modProgress(m);
-    const statusIcon = done ? '' : unlocked ? '▶' : '';
+    const statusIcon = done ? ico('check',22) : unlocked ? ico('chevron',22) : ico('lock',20);
     html += `<div class="mod-card ${unlocked?'':'locked'}" onclick="${unlocked?'openModule(\''+m.id+'\')':'void 0'}">
       <div class="mod-card-inner">
-        <div class="mod-emoji ${m.color}" aria-hidden="true">${i+1}</div>
+        <div class="mod-emoji ${m.color}" aria-hidden="true">${ico(m.ico,24)}</div>
         <div class="mod-info">
           <div class="mod-level-tag">${m.tagline}${m.id===nextId?' · <strong>Próximo para você</strong>':''}</div>
           <div class="mod-title">${m.title}</div>
@@ -1712,7 +1767,7 @@ function renderModuleStep(){
 
   document.getElementById('module-content').innerHTML =
     `<div style="background:${grad};min-height:150px;padding:calc(env(safe-area-inset-top,0px) + 20px) 24px 28px;color:white;position:relative;overflow:hidden">
-      <div style="position:absolute;right:-8px;top:-8px;font-size:80px;opacity:.15;user-select:none">${mod.emoji}</div>
+      <div style="position:absolute;right:-6px;top:-6px;opacity:.16;user-select:none;color:#fff">${ico(mod.ico,96)}</div>
       <button class="mod-hero-back" onclick="goTo('modules')" aria-label="Voltar para os módulos">←</button>
       <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;opacity:.8;margin-bottom:8px;margin-top:40px">${mod.levelTag}</div>
       <div role="heading" aria-level="1" style="font-size:20px;font-weight:600;letter-spacing:-.3px;line-height:1.25;margin-bottom:10px">${mod.title}</div>
@@ -1768,7 +1823,7 @@ function completeModule(){
 }
 
 function showCelebrate(mod){
-  document.getElementById('cel-emoji').textContent  = mod.emoji;
+  document.getElementById('cel-emoji').innerHTML  = ico(mod.ico,52);
   document.getElementById('cel-title').textContent  = mod.title+' concluído!';
   document.getElementById('cel-xp').textContent     = 'O jardim ganhou um canteiro cuidado';
   document.getElementById('cel-sub').textContent    = 'Seu progresso foi salvo. Continue para o próximo canteiro ou registre um momento bom!';
@@ -2052,7 +2107,7 @@ function renderLab(){
     html += `<div class="lab-card lab-active" id="lab-active-card">
       <div class="lab-active-tag">Experimento em andamento</div>
       <div class="lab-card-head">
-        <div class="lab-emoji">${exp.emoji}</div>
+        <div class="lab-emoji">${ico(exp.ico,22)}</div>
         <div style="flex:1">
           <div class="lab-title">${exp.title}</div>
           <div class="lab-meta"><span class="exp-tag">${exp.emotion}</span> · ${exp.time} · iniciado ${new Date(active.ts).toLocaleDateString('pt-BR',{day:'2-digit',month:'short'})}</div>
@@ -2081,7 +2136,7 @@ function renderLab(){
     const doneRuns = D.experiments.filter(e=>e.expId===exp.id && e.status==='done').length;
     html += `<div class="lab-card ${doneRuns?'done-before':''}" id="lab-${exp.id}">
       <div class="lab-card-head">
-        <div class="lab-emoji">${exp.emoji}</div>
+        <div class="lab-emoji">${ico(exp.ico,22)}</div>
         <div style="flex:1">
           <div class="lab-title">${exp.title}</div>
           <div class="lab-meta"><span class="exp-tag">${exp.emotion}</span> · ${exp.time}</div>
@@ -2323,7 +2378,7 @@ function renderAssessResult(){
   };
   document.getElementById('assess-wrap').innerHTML=
     `<div style="padding:0 16px 24px">
-      <div class="result-hero ${lvl==='seco'?'hi':lvl==='fragil'?'mid':'low'}"><h2>${info.icon} ${info.title}</h2><p>${info.msg}</p></div>
+      <div class="result-hero ${lvl==='seco'?'hi':lvl==='fragil'?'mid':'low'}"><h2 class="result-title"><span class="result-ico">${ico(info.icon,28)}</span>${info.title}</h2><p>${info.msg}</p></div>
       ${needSupport ? supportCardHTML() : ''}
       <div class="card">
         <div class="card-lbl">Suas pontuações (SPANE)</div>
@@ -2610,7 +2665,7 @@ function a11yHeading(){
   if(h){ h.setAttribute('role','heading'); h.setAttribute('aria-level','1'); }
 }
 let _a11yT=null;
-new MutationObserver(()=>{ clearTimeout(_a11yT); _a11yT=setTimeout(()=>{ a11yEnhance(); a11yHeading(); },50); }).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+new MutationObserver(()=>{ clearTimeout(_a11yT); _a11yT=setTimeout(()=>{ a11yEnhance(); a11yHeading(); iconize(); },50); }).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
 
 /* Modal: foco entra no diálogo, Tab fica preso nele e o foco volta ao fechar */
 let _lastFocus=null;
@@ -2657,7 +2712,7 @@ function renderNudge(){
   // 0. Pré-avaliação pendente
   if(!D.pretest && D.obDone){
     html = `<div class="nudge mint">
-      <div class="nudge-icon"></div>
+      <div class="nudge-icon">${ico('compass',24)}</div>
       <div class="nudge-body"><strong>Um ponto de partida.</strong>
       São cerca de 3 minutos para medir como você está hoje. Os módulos se abrem depois dela.</div>
       <button class="nudge-btn" onclick="goTo('pretest')">Responder agora</button>
@@ -2666,7 +2721,7 @@ function renderNudge(){
   // 1. Instalar na tela de início (uma vez, se ainda não instalou)
   else if(!isInstalled() && !D.installSeen){
     html = `<div class="nudge lav">
-      <div class="nudge-icon"></div>
+      <div class="nudge-icon">${ico('mobile',24)}</div>
       <div class="nudge-body"><strong>Leve o Floresça com você.</strong>
       Adicione à tela de início para abrir como um app — com o ícone da flor e funcionando offline.</div>
       <button class="nudge-btn" onclick="showInstallModal()">Ver como</button>
@@ -2675,7 +2730,7 @@ function renderNudge(){
   // 1b. Ativar lembretes (uma vez, depois de conhecer a instalação)
   else if(D.installSeen && !D.notifSeen && !D.reminders.enabled){
     html = `<div class="nudge mint">
-      <div class="nudge-icon"></div>
+      <div class="nudge-icon">${ico('bell',24)}</div>
       <div class="nudge-body"><strong>Ligue o cultivo à sua rotina.</strong>
       Um lembrete no calendário ou no navegador ajuda a criar o hábito. Escolha o que funciona para você.</div>
       <button class="nudge-btn" onclick="showNotifModal()">Ver opções</button>
@@ -2684,7 +2739,7 @@ function renderNudge(){
   // 1c. Convite opcional para a pesquisa (uma vez, depois de conhecer o app)
   else if(D.pretest && !D.researchInviteSeen && !D.consentGiven && totalDays >= 2){
     html = `<div class="nudge lav">
-      <div class="nudge-icon"></div>
+      <div class="nudge-icon">${ico('flask',24)}</div>
       <div class="nudge-body"><strong>Convite opcional.</strong>
       Quer contribuir com a pesquisa do Psicoterapia e Afins? Não muda nada no app, e você pode recusar.</div>
       <button class="nudge-btn" onclick="openInvite()">Ver convite</button>
@@ -2694,7 +2749,7 @@ function renderNudge(){
   else if(activeExp){
     const exp = EXPERIMENTS.find(x=>x.id===activeExp.expId);
     html = `<div class="nudge amber">
-      <div class="nudge-icon"></div>
+      <div class="nudge-icon">${ico('flask',24)}</div>
       <div class="nudge-body"><strong>Experimento em andamento:</strong> ${exp?exp.title:''}.
       Já fez? Volte ao laboratório para comparar previsão e realidade.</div>
       <button class="nudge-btn" onclick="goTo('lab')">Ir ao laboratório</button>
@@ -2703,7 +2758,7 @@ function renderNudge(){
   // 2. Retorno após pausa — acolher sem culpa
   else if(daysSince !== null && daysSince >= 3){
     html = `<div class="nudge lav">
-      <div class="nudge-icon"></div>
+      <div class="nudge-icon">${ico('heart',24)}</div>
       <div class="nudge-body"><strong>Que bom ter você de volta.</strong>
       Jardins sobrevivem a dias sem rega — o que importa é regar hoje. Um momento pequeno já recomeça o cultivo.</div>
       <button class="nudge-btn" onclick="goTo('diary')">Registrar agora</button>
@@ -2713,7 +2768,7 @@ function renderNudge(){
   else if(halfMod){
     const pct = modProgress(halfMod);
     html = `<div class="nudge mint">
-      <div class="nudge-icon"></div>
+      <div class="nudge-icon">${ico('book',24)}</div>
       <div class="nudge-body"><strong>${halfMod.title}</strong> está ${pct}% completo.
       Faltam só alguns passos para fechar este canteiro.</div>
       <button class="nudge-btn" onclick="openModule('${halfMod.id}')">Continuar</button>
@@ -2722,7 +2777,7 @@ function renderNudge(){
   // 4. Dias de cultivo acumulados — reforço sem pressão (nunca zera)
   else if(totalDays >= 2){
     html = `<div class="nudge amber">
-      <div class="nudge-icon"></div>
+      <div class="nudge-icon">${ico('leaf',24)}</div>
       <div class="nudge-body"><strong>${totalDays} dias de cultivo até agora.</strong>
       Cada dia conta, e pausas fazem parte do cultivo. É a prática repetida, não a perfeição, que treina o radar.</div>
     </div>`;
@@ -3017,3 +3072,4 @@ if(!D.obDone){
 }
 
 a11yEnhance();
+iconize();

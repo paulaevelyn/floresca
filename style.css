@@ -1288,3 +1288,27 @@ button.chip,button.ob-opt,button.row-link,button.link-btn{font-family:var(--font
 .dados-group>summary small,.emo-cell .emo-name,.emo-cell .emo-desc,.lab-intro,.lab-meta,.lab-desc,.lab-belief,.lab-btn,.predict-lbl,.predict-vs,
 .quick-sub,.mod-xp,.mod-lock-msg,.pt-q-hint,.rep-item,.entry-dt,.brand-link,.flipcard .fc-front,.flipcard .fc-back,.breath-label,.scale-btn{font-size:14px}
 .nudge-btn{padding:10px 16px;min-height:44px}
+
+/* ícones de traço fino */
+.ico{display:block;flex-shrink:0}
+.ob-icon{color:var(--mint-d);margin-bottom:20px;line-height:0}
+.ob-step-icon{color:var(--mint-d);display:flex;align-items:center;justify-content:center}
+.ob-step-icon.coral{color:var(--coral-d)}.ob-step-icon.lav{color:#5C5290}.ob-step-icon.amber{color:#8A5410}
+.ob-banner-icon,.consent-item-icon,.legal-item-icon{color:var(--mint-d);line-height:0}
+.nudge-icon{color:var(--mint-d);line-height:0}
+.nudge.lav .nudge-icon{color:#5C5290}.nudge.amber .nudge-icon{color:#8A5410}.nudge.coral .nudge-icon{color:var(--coral-d)}
+.crisis-res span{color:var(--coral-d);line-height:0;display:flex}
+.mod-emoji{display:flex;align-items:center;justify-content:center;color:var(--mint-d)}
+.mod-emoji.coral{color:var(--coral-d)}.mod-emoji.lav{color:#5C5290}.mod-emoji.amber{color:#8A5410}
+.lab-emoji{color:var(--mint-d)}
+.emo-emoji{color:var(--mint-d);line-height:0;margin-top:2px}
+.celebrate-emoji{color:var(--mint-d);display:flex;justify-content:center;line-height:0}
+.result-title{display:flex;align-items:center;gap:10px}
+.result-ico{line-height:0}
+.row-link .rl-ico{color:var(--mint-d);line-height:0;flex-shrink:0}
+.row-link .rl-txt{flex:1;min-width:0}
+.row-link{justify-content:flex-start}
+.row-link .set-arr{margin-left:auto}
+.mod-status{color:var(--muted);line-height:0;display:flex;align-items:center}
+.mod-card .mod-status .ico{display:block}
+.mod-card:has(.mod-prog-fill[style*="width:100%"]) .mod-status{color:var(--mint-d)}
