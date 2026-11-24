@@ -28,10 +28,10 @@ const BRAND_FOOTER_HTML = `
     <strong>Recurso psicoeducativo</strong> — não substitui acompanhamento psicológico profissional.<br>
     <a href="https://www.psicoterapiaeafins.com.br" target="_blank" style="color:#3D5A52;font-weight:700;text-decoration:none">psicoterapiaeafins.com.br</a>
     &nbsp;·&nbsp;
-    <a href="https://www.instagram.com/psicoterapiaeafins" target="_blank" style="color:#B85550;font-weight:700;text-decoration:none">@psicoterapiaeafins</a>
+    <a href="https://www.instagram.com/psicoterapiaeafins" target="_blank" style="color:#A34A45;font-weight:700;text-decoration:none">@psicoterapiaeafins</a>
   </div>
 </div>
-<div style="font-size:12px;color:#A0ADB8;text-align:center;padding:8px 0 4px;line-height:1.6">
+<div style="font-size:12px;color:#6B6F78;text-align:center;padding:8px 0 4px;line-height:1.6">
   © 2026 Psicoterapia e Afins · Todos os direitos reservados<br>
   Proibida a reprodução sem autorização prévia
 </div>`;
@@ -207,7 +207,7 @@ const ALL_BADGES = [
   { id:'b_m8',   emoji:'', name:'Jardim Completo',     desc:'Completou todos os módulos' },
   { id:'b_str7', emoji:'', name:'Sete dias de cuidado', desc:'7 dias de cultivo' },
   { id:'b_d10',  emoji:'', name:'Caçador/a de Momentos', desc:'10+ momentos registrados' },
-  { id:'b_xp',   emoji:'', name:'Dedicado/a',          desc:'Atingiu 300 XP' },
+  { id:'b_xp',   emoji:'', name:'Dedicado/a',          desc:'Cuidou do jardim com constância' },
   { id:'b_exp1', emoji:'', name:'Cientista de Si',     desc:'Concluiu o 1º experimento' },
   { id:'b_exp5', emoji:'', name:'Pesquisador/a',       desc:'Concluiu 5 experimentos' },
 ];
@@ -342,23 +342,23 @@ function svgBroaden(){
     </defs>
     <!-- Node: Emoção positiva (top) -->
     <ellipse cx="150" cy="34" rx="72" ry="22" fill="#FBF0DF" stroke="#C47D2A" stroke-width="2"/>
-    <text x="150" y="30" text-anchor="middle" font-size="11" font-weight="700" fill="#7A4A10" font-family="Nunito Sans,sans-serif">Emoção positiva</text>
-    <text x="150" y="43" text-anchor="middle" font-size="10" fill="#7A4A10" font-family="Nunito Sans,sans-serif">mesmo breve e sutil</text>
+    <text x="150" y="30" text-anchor="middle" font-size="11" font-weight="700" fill="#7A4A10" font-family="Poppins,sans-serif">Emoção positiva</text>
+    <text x="150" y="43" text-anchor="middle" font-size="10" fill="#7A4A10" font-family="Poppins,sans-serif">mesmo breve e sutil</text>
     <path d="M212,45 Q255,80 255,120" fill="none" stroke="#A0ADB8" stroke-width="1.5" marker-end="url(#arrowJ)"/>
     <!-- Node: Mente amplia (right) -->
     <ellipse cx="248" cy="140" rx="48" ry="24" fill="#EEE9FB" stroke="#8B7FB8" stroke-width="2"/>
-    <text x="248" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#3D2E7A" font-family="Nunito Sans,sans-serif">A mente amplia</text>
-    <text x="248" y="147" text-anchor="middle" font-size="9" fill="#3D2E7A" font-family="Nunito Sans,sans-serif">atenção · criatividade</text>
+    <text x="248" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#3D2E7A" font-family="Poppins,sans-serif">A mente amplia</text>
+    <text x="248" y="147" text-anchor="middle" font-size="9" fill="#3D2E7A" font-family="Poppins,sans-serif">atenção · criatividade</text>
     <path d="M240,166 Q230,210 180,225" fill="none" stroke="#A0ADB8" stroke-width="1.5" marker-end="url(#arrowJ)"/>
     <!-- Node: Recursos crescem (bottom) -->
     <ellipse cx="150" cy="230" rx="72" ry="22" fill="#F0F6F3" stroke="#5E7D73" stroke-width="2"/>
-    <text x="150" y="226" text-anchor="middle" font-size="11" font-weight="700" fill="#3D5A52" font-family="Nunito Sans,sans-serif">Recursos crescem</text>
-    <text x="150" y="239" text-anchor="middle" font-size="10" fill="#3D5A52" font-family="Nunito Sans,sans-serif">laços · ideias · saúde</text>
+    <text x="150" y="226" text-anchor="middle" font-size="11" font-weight="700" fill="#3D5A52" font-family="Poppins,sans-serif">Recursos crescem</text>
+    <text x="150" y="239" text-anchor="middle" font-size="10" fill="#3D5A52" font-family="Poppins,sans-serif">laços · ideias · saúde</text>
     <path d="M120,225 Q60,210 52,166" fill="none" stroke="#A0ADB8" stroke-width="1.5" marker-end="url(#arrowJ)"/>
     <!-- Node: Resiliência (left) -->
     <ellipse cx="52" cy="140" rx="46" ry="24" fill="#FAF0EF" stroke="#D96C63" stroke-width="2"/>
-    <text x="52" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#B85550" font-family="Nunito Sans,sans-serif">Resiliência</text>
-    <text x="52" y="147" text-anchor="middle" font-size="9" fill="#B85550" font-family="Nunito Sans,sans-serif">amortece as quedas</text>
+    <text x="52" y="134" text-anchor="middle" font-size="10" font-weight="700" fill="#A34A45" font-family="Poppins,sans-serif">Resiliência</text>
+    <text x="52" y="147" text-anchor="middle" font-size="9" fill="#A34A45" font-family="Poppins,sans-serif">amortece as quedas</text>
     <path d="M60,118 Q90,70 90,45" fill="none" stroke="#A0ADB8" stroke-width="1.5" marker-end="url(#arrowJ)"/>
   </svg>
   <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5">Cada volta da espiral deixa você com <strong>mais recursos</strong> do que tinha antes — mesmo depois que a emoção passa.</p>
@@ -391,21 +391,21 @@ function svgThreeSystems(){
   <svg viewBox="0 0 300 240" style="width:100%;max-width:320px;display:block;margin:0 auto">
     <circle cx="105" cy="145" r="72" fill="rgba(217,108,99,.18)" stroke="#D96C63" stroke-width="2"/>
     <text x="88" y="130" font-size="18" text-anchor="middle" font-family="sans-serif"></text>
-    <text x="88" y="148" text-anchor="middle" font-size="11" font-weight="800" fill="#B85550" font-family="Nunito Sans,sans-serif">Ameaça</text>
-    <text x="88" y="161" text-anchor="middle" font-size="9" fill="#B85550" font-family="Nunito Sans,sans-serif">medo · ansiedade</text>
-    <text x="88" y="173" text-anchor="middle" font-size="9" fill="#B85550" font-family="Nunito Sans,sans-serif">raiva · evitamento</text>
+    <text x="88" y="148" text-anchor="middle" font-size="11" font-weight="800" fill="#A34A45" font-family="Poppins,sans-serif">Ameaça</text>
+    <text x="88" y="161" text-anchor="middle" font-size="9" fill="#A34A45" font-family="Poppins,sans-serif">medo · ansiedade</text>
+    <text x="88" y="173" text-anchor="middle" font-size="9" fill="#A34A45" font-family="Poppins,sans-serif">raiva · evitamento</text>
     <circle cx="195" cy="145" r="72" fill="rgba(196,125,42,.15)" stroke="#C47D2A" stroke-width="2"/>
     <text x="212" y="130" font-size="18" text-anchor="middle" font-family="sans-serif"></text>
-    <text x="212" y="148" text-anchor="middle" font-size="11" font-weight="800" fill="#7A4A10" font-family="Nunito Sans,sans-serif">Conquista</text>
-    <text x="212" y="161" text-anchor="middle" font-size="9" fill="#7A4A10" font-family="Nunito Sans,sans-serif">ambição · excitação</text>
-    <text x="212" y="173" text-anchor="middle" font-size="9" fill="#7A4A10" font-family="Nunito Sans,sans-serif">busca · realização</text>
+    <text x="212" y="148" text-anchor="middle" font-size="11" font-weight="800" fill="#7A4A10" font-family="Poppins,sans-serif">Conquista</text>
+    <text x="212" y="161" text-anchor="middle" font-size="9" fill="#7A4A10" font-family="Poppins,sans-serif">ambição · excitação</text>
+    <text x="212" y="173" text-anchor="middle" font-size="9" fill="#7A4A10" font-family="Poppins,sans-serif">busca · realização</text>
     <circle cx="150" cy="88" r="72" fill="rgba(94,125,115,.15)" stroke="#5E7D73" stroke-width="2.5"/>
     <text x="150" y="68" font-size="20" text-anchor="middle" font-family="sans-serif"></text>
-    <text x="150" y="88" text-anchor="middle" font-size="11" font-weight="800" fill="#3D5A52" font-family="Nunito Sans,sans-serif">Calmante</text>
-    <text x="150" y="101" text-anchor="middle" font-size="9" fill="#3D5A52" font-family="Nunito Sans,sans-serif">contentamento · segurança</text>
-    <text x="150" y="113" text-anchor="middle" font-size="9" fill="#3D5A52" font-family="Nunito Sans,sans-serif">pertencimento · calor</text>
+    <text x="150" y="88" text-anchor="middle" font-size="11" font-weight="800" fill="#3D5A52" font-family="Poppins,sans-serif">Calmante</text>
+    <text x="150" y="101" text-anchor="middle" font-size="9" fill="#3D5A52" font-family="Poppins,sans-serif">contentamento · segurança</text>
+    <text x="150" y="113" text-anchor="middle" font-size="9" fill="#3D5A52" font-family="Poppins,sans-serif">pertencimento · calor</text>
   </svg>
-  <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5">Vivemos alternando entre <strong style="color:#B85550">Ameaça</strong> e <strong style="color:#7A4A10">Conquista</strong>. O sistema <strong style="color:#3D5A52">Calmante</strong> — fonte do contentamento — costuma ser o mais esquecido.</p>
+  <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5">Vivemos alternando entre <strong style="color:#A34A45">Ameaça</strong> e <strong style="color:#7A4A10">Conquista</strong>. O sistema <strong style="color:#3D5A52">Calmante</strong> — fonte do contentamento — costuma ser o mais esquecido.</p>
 </div>`;
 }
 
@@ -1145,7 +1145,7 @@ function renderFirstPractice(){
       Se algo incomodar, respire do seu jeito ou pule. Não existe jeito errado.
     </p>
     <div id="fp-circle" style="width:120px;height:120px;border-radius:50%;margin:0 auto 14px;background:var(--mint-l,#DDF1EA);border:2px solid var(--mint-d,#1B6A58);transition:transform 4s ease-in-out"></div>
-    <div id="fp-text" style="font-size:16px;font-weight:700;min-height:24px;margin-bottom:6px"> </div>
+    <div id="fp-text" role="status" aria-live="polite" style="font-size:16px;font-weight:700;min-height:24px;margin-bottom:6px"> </div>
     <div id="fp-time" style="font-size:13px;color:var(--light);margin-bottom:18px"> </div>
     <button class="btn" id="fp-start" onclick="firstPracticeStart()">Começar (1 minuto)</button>
     <button class="btn ghost" style="margin-top:0" onclick="firstPracticeSkip()">Pular</button>
@@ -1581,7 +1581,7 @@ function renderMiniChart(svgId,emptyId){
     '<path d="'+pd+' L'+l.x+','+H+' L'+f.x+','+H+' Z" fill="url(#cg'+svgId+')"/>'+
     '<path d="'+pd+'" fill="none" stroke="'+col+'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'+
     valid.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="3.5" fill="'+col+'"/>').join('')+
-    days.map((d,i)=>'<text x="'+(px+i*step)+'" y="'+H+'" text-anchor="middle" font-size="9" fill="#A0ADB8" font-family="Nunito Sans,sans-serif">'+DIAS_C[new Date(d+'T12:00').getDay()]+'</text>').join('');
+    days.map((d,i)=>'<text x="'+(px+i*step)+'" y="'+H+'" text-anchor="middle" font-size="9" fill="#6B6F78" font-family="Poppins,sans-serif">'+DIAS_C[new Date(d+'T12:00').getDay()]+'</text>').join('');
 }
 
 function buildEntry(e){
@@ -1713,9 +1713,9 @@ function renderModuleStep(){
   document.getElementById('module-content').innerHTML =
     `<div style="background:${grad};min-height:150px;padding:calc(env(safe-area-inset-top,0px) + 20px) 24px 28px;color:white;position:relative;overflow:hidden">
       <div style="position:absolute;right:-8px;top:-8px;font-size:80px;opacity:.15;user-select:none">${mod.emoji}</div>
-      <button class="mod-hero-back" onclick="goTo('modules')">←</button>
+      <button class="mod-hero-back" onclick="goTo('modules')" aria-label="Voltar para os módulos">←</button>
       <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;opacity:.8;margin-bottom:8px;margin-top:40px">${mod.levelTag}</div>
-      <div style="font-size:20px;font-weight:600;letter-spacing:-.3px;line-height:1.25;margin-bottom:10px">${mod.title}</div>
+      <div role="heading" aria-level="1" style="font-size:20px;font-weight:600;letter-spacing:-.3px;line-height:1.25;margin-bottom:10px">${mod.title}</div>
       <div style="font-size:12px;font-weight:700;opacity:.85;background:rgba(255,255,255,.15);display:inline-block;padding:4px 10px;border-radius:20px">Etapa ${_curStep+1} de ${mod.steps.length}</div>
     </div>
     <div style="background:var(--sand);padding:8px 0 4px">${dots.length>1?`<div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:4px 0">${dots}</div>`:''}</div>
@@ -1890,7 +1890,7 @@ function renderBreathStepHTML(step){
     <p class="step-text" style="margin-bottom:0">${step.instruction}</p>
     <div class="breath-wrap">
       <div class="breath-ring" id="bc" onclick="startBreath()">
-        <div class="breath-label" id="bp">Toque</div>
+        <div class="breath-label" id="bp" role="status" aria-live="polite">Toque</div>
         <div class="breath-count" id="bcount"></div>
       </div>
       <div class="breath-phase" id="bphase">para começar</div>
@@ -2378,7 +2378,7 @@ function exportHTML(){
   }).join('');
   const html=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Relatório — Floresça</title>
 <style>@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;800&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Nunito Sans',sans-serif;background:#F7F3EF;color:#3F434B}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Poppins',sans-serif;background:#F7F3EF;color:#3F434B}
 .hero{background:linear-gradient(140deg,#5E7D73,#2B4A42);padding:40px 32px 32px;color:white}.hero h1{font-size:26px;font-weight:600;margin-bottom:6px}.hero p{font-size:13px;opacity:.82}
 .body{max-width:760px;margin:0 auto;padding:28px 24px 48px}h2{font-size:17px;font-weight:600;margin:24px 0 12px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:4px}
@@ -2386,7 +2386,7 @@ function exportHTML(){
 .ins{background:white;border-left:4px solid #5E7D73;border-radius:10px;padding:14px 16px;margin-bottom:10px}.ins-b{font-size:14px;line-height:1.65;color:#6B7280}.ins-b strong{color:#3D5A52}
 .pill{display:inline-block;background:#F0F6F3;color:#3D5A52;font-size:12px;padding:4px 10px;border-radius:20px;margin:3px;font-weight:700}
 table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.05);font-size:13px}th{background:#5E7D73;color:white;padding:10px 12px;text-align:left;font-weight:700;font-size:12px}td{padding:10px 12px;border-bottom:1px solid #F0EDE5;vertical-align:top;line-height:1.4}tr:last-child td{border-bottom:none}tr:nth-child(even)td{background:#FAFAF7}
-.ft{margin-top:32px;padding-top:20px;border-top:1px solid #E0DDD5;font-size:12px;color:#A0ADB8;text-align:center;line-height:1.7}
+.ft{margin-top:32px;padding-top:20px;border-top:1px solid #E0DDD5;font-size:12px;color:#6B6F78;text-align:center;line-height:1.7}
 @media print{body{background:white}.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body>
 <div class="hero">
   <div style="font-size:12px;opacity:.75;font-weight:600;margin-bottom:2px">Psicoterapia e Afins · psicoterapiaeafins.com.br</div>
@@ -2603,8 +2603,38 @@ document.addEventListener('keydown',e=>{
   if(t && t.getAttribute && t.getAttribute('role')==='button' && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); t.click(); }
   if(e.key==='Escape'){ const ov=document.getElementById('modal-ov'); if(ov && ov.classList.contains('on')) ov.classList.remove('on'); }
 });
+function a11yHeading(){
+  const scr = document.querySelector('.scr.on') || document.querySelector('#onboard:not(.hide) .ob-slide.on');
+  if(!scr || scr.querySelector('h1,[aria-level="1"]')) return;
+  const h = scr.querySelector('h2,.ob-title,.home-hi,.pt-hdr h2');
+  if(h){ h.setAttribute('role','heading'); h.setAttribute('aria-level','1'); }
+}
 let _a11yT=null;
-new MutationObserver(()=>{ clearTimeout(_a11yT); _a11yT=setTimeout(()=>a11yEnhance(),50); }).observe(document.body,{childList:true,subtree:true});
+new MutationObserver(()=>{ clearTimeout(_a11yT); _a11yT=setTimeout(()=>{ a11yEnhance(); a11yHeading(); },50); }).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+
+/* Modal: foco entra no diálogo, Tab fica preso nele e o foco volta ao fechar */
+let _lastFocus=null;
+(function(){
+  const ov=document.getElementById('modal-ov');
+  if(!ov) return;
+  new MutationObserver(()=>{
+    if(ov.classList.contains('on')){
+      if(!_lastFocus) _lastFocus=document.activeElement;
+      setTimeout(()=>{ const b=ov.querySelector('button,[role=button],select,input'); if(b) b.focus(); },30);
+    } else if(_lastFocus){
+      try{ _lastFocus.focus(); }catch(e){}
+      _lastFocus=null;
+    }
+  }).observe(ov,{attributes:true,attributeFilter:['class']});
+  ov.addEventListener('keydown',e=>{
+    if(e.key!=='Tab') return;
+    const f=[...ov.querySelectorAll('button,[role=button],select,input,a[href],textarea')].filter(x=>!x.disabled && x.offsetParent!==null);
+    if(!f.length) return;
+    const first=f[0], last=f[f.length-1];
+    if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+  });
+})();
 
 function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('on'),2800); }
 

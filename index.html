@@ -35,7 +35,7 @@
 <div id="app">
 
 <!-- ONBOARDING — 9 slides -->
-<div id="onboard">
+<div id="onboard" role="dialog" aria-modal="true" aria-label="Boas-vindas ao Floresça">
 
   <!-- 0: Acolhimento -->
   <div class="ob-slide on" id="obs0">
@@ -273,15 +273,15 @@
 </div>
 
 <!-- PRÉ-TESTE (SPANE + Crenças) -->
-<div class="scr" id="scr-pretest" style="padding-bottom:0">
+<main class="scr" id="scr-pretest" style="padding-bottom:0">
   <div id="pretest-content"></div>
-</div>
+</main>
 
 <!-- HOME -->
-<div class="scr on" id="scr-home">
+<main class="scr on" id="scr-home">
   <div class="home-hero">
     <div class="home-date" id="h-date"></div>
-    <div class="home-hi"   id="h-hi">Olá</div>
+    <h1 class="home-hi"   id="h-hi">Olá</h1>
     <div class="home-sub"  id="h-sub"></div>
   </div>
   <div id="h-nudge"></div>
@@ -289,46 +289,46 @@
   <div id="h-garden"></div>
   <div id="h-dose"></div>
   <div id="h-more"></div>
-</div>
+</main>
 
 <!-- MÓDULOS (lista) -->
-<div class="scr" id="scr-modules">
+<main class="scr" id="scr-modules">
   <div class="hdr"><h1>Módulos</h1><p>Os canteiros do seu jardim.</p></div>
   <div id="modules-list"></div>
-</div>
+</main>
 
 <!-- MÓDULO (view passo a passo) -->
-<div class="scr" id="scr-module" style="padding-bottom:0">
+<main class="scr" id="scr-module" style="padding-bottom:0">
   <div id="module-content"></div>
-</div>
+</main>
 
 <!-- REGISTRO DE MOMENTOS -->
-<div class="scr" id="scr-diary">
+<main class="scr" id="scr-diary">
   <div class="hdr"><h1>Momentos</h1><p>Registre o que fez bem — mesmo o pequeno.</p></div>
   <div id="diary-form" style="padding:0 16px"></div>
   <div id="diary-hist"></div>
-</div>
+</main>
 
 <!-- LABORATÓRIO DE EXPERIMENTOS -->
-<div class="scr" id="scr-lab">
+<main class="scr" id="scr-lab">
   <div class="hdr"><h1>Laboratório</h1><p>Preveja, teste, compare. Sinta na prática.</p></div>
   <div id="lab-content"></div>
-</div>
+</main>
 
 <!-- PROGRESSO -->
-<div class="scr" id="scr-progress">
+<main class="scr" id="scr-progress">
   <div class="hdr"><h1>Progresso</h1><p>Seu cultivo em dados.</p></div>
   <div id="progress-content"></div>
-</div>
+</main>
 
 <!-- AUTOAVALIAÇÃO (SPANE) -->
-<div class="scr" id="scr-assess">
+<main class="scr" id="scr-assess">
   <div class="hdr"><h1>Autoavaliação</h1><p>Como andam suas emoções.</p></div>
   <div id="assess-wrap"></div>
-</div>
+</main>
 
 <!-- DADOS -->
-<div class="scr" id="scr-dados">
+<main class="scr" id="scr-dados">
   <div class="hdr"><h1>Dados e privacidade</h1><p>Controle total sobre suas informações.</p></div>
   <div class="sdiv">Apoio</div>
   <div class="set-group">
@@ -354,7 +354,7 @@
         <div class="set-desc">Chega com o app aberto ou em segundo plano. Pode não aparecer se o app estiver totalmente fechado.</div>
       </div>
       <label class="switch">
-        <input type="checkbox" id="rem-toggle" onchange="toggleReminders(this)">
+        <input type="checkbox" id="rem-toggle" aria-label="Notificação do navegador" onchange="toggleReminders(this)">
         <span class="switch-track"></span>
       </label>
     </div>
@@ -420,7 +420,7 @@
         <div class="set-desc">Envia seus dados à pesquisa ao concluir o onboarding e o pós-teste. Desligado, nada é enviado sozinho.</div>
       </div>
       <label class="switch">
-        <input type="checkbox" id="autosync-toggle" onchange="toggleAutoSync(this)">
+        <input type="checkbox" id="autosync-toggle" aria-label="Envio automático de dados à pesquisa" onchange="toggleAutoSync(this)">
         <span class="switch-track"></span>
       </label>
     </div>
@@ -478,7 +478,7 @@
   </div>
   </details>
 
-</div>
+</main>
 
 <!-- BOTTOM NAV -->
 <nav id="nav">
@@ -511,10 +511,10 @@
 </div>
 
 <!-- CELEBRATE -->
-<div id="celebrate"><div class="celebrate-card" id="celebrate-card">
+<div id="celebrate"><div class="celebrate-card" id="celebrate-card" role="dialog" aria-modal="true" aria-label="Módulo concluído">
   <div class="celebrate-emoji" id="cel-emoji"></div>
   <div class="celebrate-title" id="cel-title">Módulo concluído!</div>
-  <div class="celebrate-xp"    id="cel-xp">+50 XP</div>
+  <div class="celebrate-xp"    id="cel-xp"></div>
   <div class="celebrate-sub"   id="cel-sub"></div>
   <div style="margin:14px 0 12px;text-align:left">
     <label style="font-size:12.5px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px" for="cel-word">Em uma palavra: o que você sentiu com este canteiro? <span style="font-weight:400">(opcional)</span></label>

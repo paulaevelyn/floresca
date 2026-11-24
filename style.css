@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --coral:    #D96C63; --coral-d: #B85550; --coral-l: #E9A39C; --coral-xl: #FAF0EF;
+  --coral:    #D96C63; --coral-d: #A34A45; --coral-l: #E9A39C; --coral-xl: #FAF0EF;
   --mint:     #5E7D73; --mint-d:  #3D5A52; --mint-l:  #DDEAE2; --mint-xl: #F0F6F3;
   --lav:      #8B7FB8; --lav-l:   #EEE9FB;
   --amber:    #C47D2A; --amber-l: #FBF0DF;
@@ -141,7 +141,7 @@ html,body{height:100%;font-family:var(--font);background:var(--sand);color:var(-
   font-size:15px;font-weight:700;color:var(--coral-d);
   line-height:1.6;font-style:italic
 }
-.ob-quote cite{display:block;font-size:12px;font-weight:600;font-style:normal;color:var(--coral);margin-top:6px}
+.ob-quote cite{display:block;font-size:12px;font-weight:600;font-style:normal;color:var(--coral-d);margin-top:6px}
 
 /* Step list (how it works) */
 .ob-step-list{display:flex;flex-direction:column;gap:10px;margin:16px 0}
@@ -321,7 +321,7 @@ html,body{height:100%;font-family:var(--font);background:var(--sand);color:var(-
   font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px
 }
 .xp-label{font-size:12px;color:var(--muted);font-weight:600}
-.xp-val{font-size:12px;font-weight:600;color:var(--coral)}
+.xp-val{font-size:12px;font-weight:600;color:var(--coral-d)}
 .xp-bar-bg{height:7px;background:var(--border);border-radius:4px;overflow:hidden}
 .xp-bar{height:100%;background:linear-gradient(90deg,var(--coral),var(--coral-l));border-radius:4px;transition:width .6s cubic-bezier(.34,1.56,.64,1)}
 
@@ -353,7 +353,7 @@ html,body{height:100%;font-family:var(--font);background:var(--sand);color:var(-
   text-align:center;transition:background .15s,transform .1s;
   font-family:var(--font)
 }
-.btn:active{transform:scale(.98);background:#9B4842}
+.btn:active{transform:scale(.98);background:#8A403B}
 .btn.ghost{background:transparent;color:var(--coral-d);border:1.5px solid var(--coral-d)}
 .btn.ghost:active{background:var(--coral-xl)}
 .btn.mint{background:var(--mint);color:white}
@@ -405,7 +405,7 @@ html,body{height:100%;font-family:var(--font);background:var(--sand);color:var(-
   display:flex;align-items:center;gap:8px
 }
 .level-pip{width:6px;height:6px;border-radius:50%;background:var(--coral);flex-shrink:0}
-.level-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--coral)}
+.level-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--coral-d)}
 
 .mod-card{
   background:var(--white);border-radius:var(--r);
@@ -430,7 +430,7 @@ html,body{height:100%;font-family:var(--font);background:var(--sand);color:var(-
 .mod-info{flex:1;min-width:0}
 .mod-level-tag{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:3px}
 .mod-title{font-size:15px;font-weight:600;line-height:1.3;margin-bottom:6px}
-.mod-xp{font-size:12px;font-weight:700;color:var(--coral)}
+.mod-xp{font-size:12px;font-weight:700;color:var(--coral-d)}
 .mod-prog-bar{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:6px}
 .mod-prog-fill{height:100%;background:var(--mint);border-radius:2px;transition:width .4s}
 .mod-status{flex-shrink:0;font-size:20px}
@@ -681,7 +681,7 @@ textarea.fill-area:focus{outline:none;border-color:var(--coral)}
 .celebrate-card.show{transform:scale(1);opacity:1;pointer-events:auto}
 .celebrate-emoji{font-size:52px;margin-bottom:14px}
 .celebrate-title{font-size:20px;font-weight:600;margin-bottom:8px}
-.celebrate-xp{font-size:14px;color:var(--coral);font-weight:700;margin-bottom:5px}
+.celebrate-xp{font-size:14px;color:var(--coral-d);font-weight:700;margin-bottom:5px}
 .celebrate-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px}
 
 /* ═══════════════════════════════════
@@ -730,7 +730,7 @@ input[type=range]::-moz-range-thumb{
   background:var(--coral);cursor:pointer;border:none
 }
 .slider-row{display:flex;align-items:center;gap:12px}
-.slider-val{font-size:22px;font-weight:600;color:var(--coral);min-width:28px;text-align:center}
+.slider-val{font-size:22px;font-weight:600;color:var(--coral-d);min-width:28px;text-align:center}
 
 /* ── Diary entries ── */
 .entry{
@@ -1280,3 +1280,11 @@ button.chip,button.ob-opt,button.row-link,button.link-btn{font-family:var(--font
 .dados-group .sdiv{padding-left:20px}
 .dados-group .set-group,.dados-group .legal-card,.dados-group .priv{margin-left:12px;margin-right:12px;box-shadow:none}
 .dados-group .copyright-block{padding:16px 20px 20px}
+
+/* acessibilidade: piso de 14px para texto de leitura e de ação (12px só em rótulos e legendas) */
+.ob-step-text strong,.ob-banner-text,.ob-num-step-body span,.ob-step-text span,.demo-label,.demo-pill,.crisis-body,.crisis-res strong,.crisis-res small,
+.nudge-body,.nudge-btn,.priv-body,.pt-link,.gp-next,.celebrate-sub,.form-hint,.chip,.type-btn,.insight-t,.disclaimer-box,.legal-item,.legal-item strong,
+.consent-item,.consent-check-lbl,.delta-lbl,.delta-vals,.set-desc,#toast,.result-hero p,.g-meta,.milestones,.row-link small,.link-btn,
+.dados-group>summary small,.emo-cell .emo-name,.emo-cell .emo-desc,.lab-intro,.lab-meta,.lab-desc,.lab-belief,.lab-btn,.predict-lbl,.predict-vs,
+.quick-sub,.mod-xp,.mod-lock-msg,.pt-q-hint,.rep-item,.entry-dt,.brand-link,.flipcard .fc-front,.flipcard .fc-back,.breath-label,.scale-btn{font-size:14px}
+.nudge-btn{padding:10px 16px;min-height:44px}
