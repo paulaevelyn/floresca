@@ -2712,7 +2712,29 @@ function copyParticipantId(){
     navigator.clipboard.writeText(id).then(done, () => toast('Não foi possível copiar. Selecione o código e copie manualmente.'));
   } else { toast('Selecione o código e copie manualmente.'); }
 }
+/* Versão do app: mesma numeração do cache do service worker (sw.js) */
+const APP_VERSION = '17';
+async function renderAppVersion(){
+  const el = document.getElementById('app-version-box'); if(!el) return;
+  let status = '';
+  try{
+    if('caches' in window){
+      const keys = await caches.keys();
+      status = keys.includes('floresca-v'+APP_VERSION) ? 'Você está na versão mais recente.' : 'Uma atualização está sendo preparada. Feche e abra o app de novo.';
+    }
+  }catch(e){}
+  el.innerHTML = '<strong>Versão '+APP_VERSION+'</strong>'+(status?status+'<br>':'')+'<button class="link-btn" onclick="checkForUpdate()">Verificar atualização</button>';
+}
+async function checkForUpdate(){
+  toast('Procurando atualização…');
+  try{
+    const reg = await navigator.serviceWorker?.getRegistration();
+    if(reg) await reg.update();
+  }catch(e){}
+  setTimeout(()=>location.reload(), 900);
+}
 function renderDadosSync(){
+  renderAppVersion();
   const pidEl = document.getElementById('pid-code');
   if(pidEl) pidEl.textContent = D.participantId || '';
   const asT = document.getElementById('autosync-toggle');
