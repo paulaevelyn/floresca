@@ -117,6 +117,7 @@ let D = {
   consentDate: null,
   autoSync: false,      // envio automático à pesquisa: só com opt-in explícito
   firstPracticeSeen: false, // já viu a primeira prática de 1 minuto
+  weekSummarySeen: null, // semana (segunda) em que fechou o resumo semanal
   researchInviteSeen: false, // já viu (e respondeu) o convite opcional de pesquisa
   anchor: null,         // âncora de rotina escolhida: { id, label, hour }
   weeklyGoal: 2,        // meta semanal gentil: nº de momentos por semana
@@ -158,6 +159,7 @@ function load(){
       if(D.firstPracticeSeen === undefined) D.firstPracticeSeen = false;
       if(D.researchInviteSeen === undefined) D.researchInviteSeen = !!D.consentGiven;
       if(D.anchor === undefined) D.anchor = null;
+      if(D.weekSummarySeen === undefined) D.weekSummarySeen = null;
       if(!D.weeklyGoal) D.weeklyGoal = 2;
       if(D.lastSync     === undefined) D.lastSync     = null;
       if(D.nickname     === undefined) D.nickname     = '';
@@ -1559,6 +1561,65 @@ function assessSuggested(){
   const days = Math.floor((new Date(today()+'T12:00') - new Date(D.assessment.date+'T12:00'))/864e5);
   return days >= 28;
 }
+/* ══════════════════════════════════
+   FRASES DE IDENTIDADE e RESUMO SEMANAL
+   Regra de ouro: só dizemos o que a pessoa de fato fez. Nada de elogio
+   genérico, comparação com outras pessoas ou ranking. O resumo usa as
+   palavras que a própria pessoa escreveu.
+   ══════════════════════════════════ */
+function identityLine(){
+  const out = [];
+  const nEntries = D.entries.length;
+  const felt = new Set(D.entries.flatMap(e=>e.emotions||[]));
+  const savored = D.entries.filter(e=>(e.savoring||[]).some(x=>x!=='Ainda não saboreei')).length;
+  const exps = D.experiments.filter(e=>e.status==='done').length;
+  if(nEntries>=1) out.push('Você é alguém que repara no que é bom.');
+  if(felt.size>=3) out.push('Você está ampliando seu repertório: já nomeou '+felt.size+' emoções diferentes.');
+  if(savored>=1) out.push('Você é alguém que se permite saborear o que é bom.');
+  if(exps>=1) out.push('Você é alguém que testa antes de acreditar.');
+  if(calcTotalDays()>=3) out.push('Voltar a cada dia, do seu jeito, também é cultivar.');
+  if(!out.length) return '';
+  const k = Math.floor(Date.now()/864e5) % out.length;
+  return out[k];
+}
+function weekStats(fromDate, toDateExcl){
+  const list = D.entries.filter(e=>e.date>=fromDate && e.date<toDateExcl);
+  const days = new Set(list.map(e=>e.date)).size;
+  const cnt = {};
+  list.forEach(e=>(e.emotions||[]).forEach(id=>{ cnt[id]=(cnt[id]||0)+1; }));
+  const top = Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,2)
+    .map(([id])=>{ const em=EMOTIONS.find(x=>x.id===id); return em?em.name.toLowerCase():null; }).filter(Boolean);
+  const best = [...list].filter(e=>e.moment).sort((a,b)=>(b.intensity||0)-(a.intensity||0) || b.ts-a.ts)[0];
+  return { n:list.length, days, top, quote: best ? best.moment : '' };
+}
+function weekSummaryText(st, goal, label){
+  const plural=(n,a,b)=>n+' '+(n===1?a:b);
+  let t = label+', você registrou <strong>'+plural(st.n,'momento','momentos')+'</strong> em '+plural(st.days,'dia','dias')+'.';
+  if(st.top.length) t += ' O que mais apareceu: <strong>'+st.top.join(' e ')+'</strong>.';
+  if(st.n>=goal) t += ' Você chegou à sua meta de '+plural(goal,'momento','momentos')+'.';
+  return t;
+}
+function renderWeekSummary(){
+  const el = document.getElementById('h-week'); if(!el) return;
+  const ws = weekStart();
+  const pws = weekStart(prevDay(7));
+  if(D.weekSummarySeen === ws){ el.innerHTML=''; return; }
+  const st = weekStats(pws, ws);
+  if(st.n<1){ el.innerHTML=''; return; }
+  const quote = st.quote ? `<blockquote class="wk-quote">“${esc(st.quote.length>110?st.quote.slice(0,107)+'…':st.quote)}”</blockquote><div class="wk-quote-by">Palavras suas, da semana passada.</div>` : '';
+  el.innerHTML = `<div class="card week-card">
+    <div class="card-lbl">Sua semana passada</div>
+    <p class="wk-text">${weekSummaryText(st, D.weeklyGoal||2, 'Na semana passada')}</p>
+    ${quote}
+    <div class="wk-actions"><button class="link-btn" onclick="closeWeekSummary()">Fechar</button><button class="link-btn" onclick="goTo('progress')">Ver no Progresso</button></div>
+  </div>`;
+}
+function closeWeekSummary(){
+  D.weekSummarySeen = weekStart(); save();
+  trackAppEvent('week_summary_closed');
+  renderWeekSummary();
+}
+
 function renderNextStep(){
   const el = document.getElementById('h-next'); if(!el) return;
   const doneToday = D.entries.some(e=>e.date===today());
@@ -1574,6 +1635,7 @@ function renderNextStep(){
     el.innerHTML = `<div class="next-card done">
       <div class="next-lbl">Hoje já foi regado</div>
       <div class="next-title">Um momento já conta. O resto do dia é descanso.</div>
+      ${identityLine()?`<div class="next-sub">${esc(identityLine())}</div>`:''}
       ${nm?`<div class="next-sub">Próximo para você: ${esc(nm.title)}</div><button class="btn next-btn ghost-light" onclick="openModule('${nm.id}')">Continuar o módulo</button>`:''}
     </div>`;
   }
@@ -1613,6 +1675,7 @@ function renderHome(){
   document.getElementById('h-sub').textContent  = SUBS[now.getDate()%SUBS.length];
   renderNudge();
   renderNextStep();
+  renderWeekSummary();
   renderGardenCard();
   renderDoseCard();
   renderHomeMore();
@@ -2317,6 +2380,13 @@ function renderProgress(){
   }
   insights.push({c:'s',t:'Canteiros cultivados',b:`<strong>${doneMods.length} de ${MODULES.length}</strong> módulos concluídos.`});
 
+  const thisWs = weekStart();
+  const stNow = weekStats(thisWs, '9999-12-31');
+  const stPrev = weekStats(weekStart(prevDay(7)), thisWs);
+  const weekHTML = (stNow.n||stPrev.n) ? `<div class="card week-card"><div class="card-lbl">Suas semanas</div>
+      ${stNow.n?`<p class="wk-text">${weekSummaryText(stNow, D.weeklyGoal||2, 'Esta semana, até agora')}</p>`:''}
+      ${stPrev.n?`<p class="wk-text">${weekSummaryText(stPrev, D.weeklyGoal||2, 'Na semana passada')}</p>`:''}
+      ${identityLine()?`<p class="wk-id">${esc(identityLine())}</p>`:''}</div>` : '';
   el.innerHTML=
     `<div class="card garden-card">
       <div class="card-lbl">Seu jardim</div>
@@ -2324,6 +2394,7 @@ function renderProgress(){
       <div class="g-meta"><span>${days} ${days===1?'dia':'dias'} de cultivo. Pausas fazem parte e nada murcha.</span></div>
       <ul class="milestones">${marks}</ul>
     </div>
+    ${weekHTML}
     <div class="card">
       <div class="card-lbl">Momentos positivos — 7 dias</div>
       <svg class="chart-svg" id="p-chart" viewBox="0 0 320 72" role="img" aria-label="Gráfico de momentos positivos nos últimos sete dias"></svg>
@@ -2760,7 +2831,7 @@ function renderNudge(){
     html = `<div class="nudge lav">
       <div class="nudge-icon">${ico('heart',24)}</div>
       <div class="nudge-body"><strong>Que bom ter você de volta.</strong>
-      Jardins sobrevivem a dias sem rega — o que importa é regar hoje. Um momento pequeno já recomeça o cultivo.</div>
+      Jardins sobrevivem a dias sem rega — o que importa é regar hoje. ${identityLine()?esc(identityLine())+' ':''}Um momento pequeno já recomeça o cultivo.</div>
       <button class="nudge-btn" onclick="goTo('diary')">Registrar agora</button>
     </div>`;
   }

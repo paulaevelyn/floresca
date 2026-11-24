@@ -2,7 +2,7 @@
    Navegando as Preocupações — v4
    Psicoterapia e Afins · Gameful Learning Edition
    ===================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,500&display=swap');
 
 :root {
   --coral:    #D96C63; --coral-d: #A34A45; --coral-l: #E9A39C; --coral-xl: #FAF0EF;
@@ -1312,3 +1312,10 @@ button.chip,button.ob-opt,button.row-link,button.link-btn{font-family:var(--font
 .mod-status{color:var(--muted);line-height:0;display:flex;align-items:center}
 .mod-card .mod-status .ico{display:block}
 .mod-card:has(.mod-prog-fill[style*="width:100%"]) .mod-status{color:var(--mint-d)}
+
+/* resumo semanal e frases de identidade */
+.week-card .wk-text{font-size:15px;line-height:1.65;color:var(--graphite);margin:0 0 10px}
+.week-card .wk-id{font-size:14px;line-height:1.6;color:var(--mint-d);margin:4px 0 0}
+.wk-quote{margin:14px 0 4px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:500;font-size:20px;line-height:1.4;color:var(--graphite)}
+.wk-quote-by{font-size:12px;color:var(--muted);margin-bottom:8px}
+.wk-actions{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px}

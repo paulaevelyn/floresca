@@ -28,6 +28,8 @@ se explica/ilustra → superficial (adaptar à vontade).
 | Primeira prática (1 min) | Texto, animação, duração da fase | Benefício percebido cedo, antes do pré-teste; expiração prolongada (sistema calmante, TFC); sempre opcional (pular) |
 | Gatilho de rotina (âncora) | Opções de âncora, horários sugeridos | Plano quando-então **logo após a primeira prática** (dia 0), ligado ao lembrete (Gollwitzer, 1999) |
 | Lembrete | Texto, horário | Honesto sobre o limite técnico: evento de calendário (.ics) como canal confiável; notificação do navegador só com o app aberto ou em segundo plano. Sem servidor de push |
+| Frases de identidade | Texto das frases, onde aparecem (retorno, "hoje já foi regado", Progresso) | Só enunciar o que a pessoa **de fato fez** ("Você já nomeou 4 emoções"), nunca elogio genérico, comparação com outras pessoas ou ranking. Reforça identidade a partir de evidência comportamental |
+| Resumo semanal | Redação, posição na Home, tipografia da citação | Reflete a semana com os **dados e as palavras da própria pessoa** (uma frase dela é citada). Sem nota, sem comparação, sem alerta quando a semana foi vazia: se não houve registro, o resumo simplesmente não aparece |
 | Meta semanal | Número padrão (2), texto | Meta **semanal** e editável, nunca diária; abaixo da meta não gera aviso negativo |
 | Pesquisa e consentimento | Textos do convite | **Separado do uso do app.** Consentimento só é gravado após aceite explícito (18+); `syncToResearch` exige consentimento; recusar não muda nada no app |
 | Apoio em crise | Texto, ordem dos serviços | Acesso permanente ("Preciso de apoio agora") na Home, no Registro e em Dados, e linguagem de estado (não de traço) nos resultados do SPANE |
